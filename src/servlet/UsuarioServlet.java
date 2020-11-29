@@ -53,14 +53,25 @@ public class UsuarioServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String id = request.getParameter("id");
+		
+		Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : 0;
+		
 		String login = request.getParameter("login");
 		
 		String senha = request.getParameter("senha");
 		
-		Usuario usuario = new Usuario(login, senha);
+		Usuario usuario = new Usuario(usuarioId, login, senha);
 		
-		daoUsuario.inserir(usuario);
-		
+		if(id == null || id.isEmpty()) {
+			
+			daoUsuario.inserir(usuario);
+		}
+		else {
+			
+			daoUsuario.atualizar(usuario);
+		}
+
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 		
 		request.setAttribute("usuarios", daoUsuario.listar());

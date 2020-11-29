@@ -13,6 +13,11 @@
 	<form action="usuarioServlet" method="post">
 		<table>
 			<tr>
+				<td>Código:</td>
+				<td><input type="text" id="id" name="id" value="${usuario.id}"></td>
+			<tr/>
+		
+			<tr>
 				<td>Login:</td>
 				<td><input type="text" id="login" name="login" value="${usuario.login}"></td>
 			</tr>

@@ -2,6 +2,8 @@ package beans;
 
 public class Usuario {
 	
+	private Long id;
+	
 	private String login;
 	
 	private String senha;
@@ -17,6 +19,15 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
+	public Usuario (Long id, String login, String senha) {
+		
+		this.id = id;
+		
+		this.login = login;
+		
+		this.senha = senha;
+	}
+	
 	public boolean validar(String login, String senha) {
 		
 		if(login.equalsIgnoreCase("admin") && senha.equalsIgnoreCase("teste321")) {
@@ -25,6 +36,14 @@ public class Usuario {
 		}
 		
 		return false;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getLogin() {

@@ -61,7 +61,7 @@ public class DaoUsuario {
 			
 			if(resultSet.next()) {
 				
-				Usuario usuario = new Usuario(resultSet.getString("login"), resultSet.getString("senha"));
+				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), resultSet.getString("login"), resultSet.getString("senha"));
 				
 				return usuario;
 			}
@@ -101,6 +101,37 @@ public class DaoUsuario {
 		}
 		
 		return null;
+	}
+	
+	public void atualizar(Usuario usuario) {
+		
+		try {
+			
+			String sql = "update usuario set login = ?, senha = ? where id = " + usuario.getId();
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, usuario.getLogin());
+			
+			preparedStatement.setString(2, usuario.getSenha());
+			
+			preparedStatement.executeUpdate();
+			
+			connection.commit();
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			try {
+				
+				connection.rollback();
+			}
+			catch(SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+		}
 	}
 	
 	public void excluir(String login) {
