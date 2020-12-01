@@ -88,7 +88,7 @@ public class DaoUsuario {
 			
 			while(resultSet.next()) {
 				
-				Usuario usuario = new Usuario(resultSet.getString("login"), resultSet.getString("senha"));
+				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), resultSet.getString("login"), resultSet.getString("senha"));
 				
 				usuarios.add(usuario);
 			}
