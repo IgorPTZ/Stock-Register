@@ -4,6 +4,8 @@ public class Usuario {
 	
 	private Long id;
 	
+	private String nome;
+	
 	private String login;
 	
 	private String senha;
@@ -19,13 +21,15 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public Usuario (Long id, String login, String senha) {
+	public Usuario (Long id, String login, String senha, String nome) {
 		
 		this.id = id;
 		
 		this.login = login;
 		
 		this.senha = senha;
+		
+		this.nome = nome;
 	}
 	
 	public boolean validar(String login, String senha) {
@@ -44,6 +48,14 @@ public class Usuario {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getLogin() {

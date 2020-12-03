@@ -57,11 +57,13 @@ public class UsuarioServlet extends HttpServlet {
 		
 		Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : 0;
 		
+		String nome  = request.getParameter("nome");
+		
 		String login = request.getParameter("login");
 		
 		String senha = request.getParameter("senha");
 		
-		Usuario usuario = new Usuario(usuarioId, login, senha);
+		Usuario usuario = new Usuario(usuarioId, login, senha, nome);
 		
 		if(id == null || id.isEmpty()) {
 			

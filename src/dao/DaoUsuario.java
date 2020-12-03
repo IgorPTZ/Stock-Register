@@ -23,13 +23,15 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha) values (?, ?)";
+			String sql = "insert into usuario(login, senha, nome) values (?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			preparedStatement.setString(1, usuario.getLogin());
 			
 			preparedStatement.setString(2, usuario.getSenha());
+			
+			preparedStatement.setString(3, usuario.getNome());
 			
 			preparedStatement.execute();
 			
@@ -61,8 +63,11 @@ public class DaoUsuario {
 			
 			if(resultSet.next()) {
 				
-				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), resultSet.getString("login"), resultSet.getString("senha"));
-				
+				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), 
+						                      resultSet.getString("login"), 
+						                      resultSet.getString("senha"),
+						                      resultSet.getString("nome"));
+				 
 				return usuario;
 			}
 			
@@ -88,7 +93,10 @@ public class DaoUsuario {
 			
 			while(resultSet.next()) {
 				
-				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), resultSet.getString("login"), resultSet.getString("senha"));
+				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), 
+						                      resultSet.getString("login"), 
+						                      resultSet.getString("senha"),
+						                      resultSet.getString("nome"));
 				
 				usuarios.add(usuario);
 			}
@@ -107,13 +115,15 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "update usuario set login = ?, senha = ? where id = " + usuario.getId();
+			String sql = "update usuario set login = ?, senha = ?, nome = ? where id = " + usuario.getId();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			preparedStatement.setString(1, usuario.getLogin());
 			
 			preparedStatement.setString(2, usuario.getSenha());
+			
+			preparedStatement.setString(3, usuario.getNome());
 			
 			preparedStatement.executeUpdate();
 			
