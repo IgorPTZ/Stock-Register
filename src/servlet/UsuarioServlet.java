@@ -25,13 +25,21 @@ public class UsuarioServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		String acao = request.getParameter("acao");
+		String acao = request.getParameter("acao");	
 		
-		String login = request.getParameter("login");
+		if(acao.equalsIgnoreCase("listall")) {
 			
-		if(acao.equalsIgnoreCase("delete")) {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			
-			daoUsuario.excluir(login);
+			request.setAttribute("usuarios", daoUsuario.listar());
+			
+			requestDispatcher.forward(request, response);
+		}
+		else if(acao.equalsIgnoreCase("delete")) {
+			
+			Long id = Long.parseLong(request.getParameter("id"));
+			
+			daoUsuario.excluir(id);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			
@@ -41,7 +49,9 @@ public class UsuarioServlet extends HttpServlet {
 		}
 		else if(acao.equalsIgnoreCase("put")) {
 			
-			Usuario usuario = daoUsuario.consultar(login);
+			Long id = Long.parseLong(request.getParameter("id"));
+			
+			Usuario usuario = daoUsuario.consultar(id);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			
@@ -53,31 +63,43 @@ public class UsuarioServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String id = request.getParameter("id");
+		String acao = request.getParameter("acao");
 		
-		Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : 0;
-		
-		String nome  = request.getParameter("nome");
-		
-		String login = request.getParameter("login");
-		
-		String senha = request.getParameter("senha");
-		
-		Usuario usuario = new Usuario(usuarioId, login, senha, nome);
-		
-		if(id == null || id.isEmpty()) {
+		if(acao != null && acao.equalsIgnoreCase("reset")) {
 			
-			daoUsuario.inserir(usuario);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
+			
+			request.setAttribute("usuarios", daoUsuario.listar());
+			
+			requestDispatcher.forward(request, response);
 		}
 		else {
+			String id = request.getParameter("id");
 			
-			daoUsuario.atualizar(usuario);
+			Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : 0;
+			
+			String nome  = request.getParameter("nome");
+			
+			String login = request.getParameter("login");
+			
+			String senha = request.getParameter("senha");
+			
+			Usuario usuario = new Usuario(usuarioId, login, senha, nome);
+			
+			if((id == null || id.isEmpty()) && daoUsuario.isLoginValido(login)) {
+				
+				daoUsuario.inserir(usuario);
+			}
+			else if(id != null && id.isEmpty() == false){
+				
+				daoUsuario.atualizar(usuario);
+			}
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
+			
+			request.setAttribute("usuarios", daoUsuario.listar());
+			
+			requestDispatcher.forward(request, response);
 		}
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
-		
-		request.setAttribute("usuarios", daoUsuario.listar());
-		
-		requestDispatcher.forward(request, response);
 	}
 }

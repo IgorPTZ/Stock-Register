@@ -51,11 +51,33 @@ public class DaoUsuario {
 		}
 	}
 	
-	public Usuario consultar(String login) {
+	public boolean isLoginValido(String login) {
+		
+		try {
+			String sql = "select count(1) as quantidade from usuario where login = '" + login + "'";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				return ( resultSet.getInt("quantidade") <= 0 );
+			}
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public Usuario consultar(Long id) {
 		
 		try {
 			
-			String sql = "select * from usuario where login = '" + login + "'";
+			String sql = "select * from usuario where id = " + id;
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -144,11 +166,11 @@ public class DaoUsuario {
 		}
 	}
 	
-	public void excluir(String login) {
+	public void excluir(Long id) {
 		
 		try {
 			
-			String sql = "delete from usuario where login = '" + login + "'";
+			String sql = "delete from usuario where id = '" + id + "'";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			

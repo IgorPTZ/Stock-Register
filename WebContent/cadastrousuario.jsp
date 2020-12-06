@@ -11,7 +11,7 @@
 <body>
 	<h2><center>Cadastro de usuário</center></h2>
 	
-	<form action="usuarioServlet" method="post">
+	<form action="usuarioServlet" id="formUsuario" method="post">
 		<ul class="form-style-1">
 			<li>
 				<table>
@@ -34,8 +34,12 @@
 						<td>Senha:</td>
 						<td><input type="password" id="senha" name="senha" value="${usuario.senha}"></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Salvar"> 
+						    <input type="submit" value="Cancelar" onclick="document.getElementById('formUsuario').action = 'usuarioServlet?acao=reset'"></td>
+					</tr>
 				</table>
-				<input type="submit" value="Salvar">
 			</li>
 		</ul>
 	</form>
@@ -55,8 +59,8 @@
 					<td style="width: 150px"><c:out value="${usuario.id}"></c:out></td>
 					<td style="width: 150px"><c:out value="${usuario.login}"></c:out></td>
 					<td><c:out value="${usuario.nome}"></c:out></td>
-					<td><a href="usuarioServlet?acao=delete&login=${usuario.login}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
-					<td><a href="usuarioServlet?acao=put&login=${usuario.login}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
+					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
+					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
