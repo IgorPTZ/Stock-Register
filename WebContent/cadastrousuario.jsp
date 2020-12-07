@@ -9,7 +9,10 @@
 </head>
 
 <body>
-	<h2><center>Cadastro de usuário</center></h2>
+	<center>
+		<h2>Cadastro de usuário</h2>
+		<h3 style="color: red;">${mensagemDeErro}</h3>
+	</center>
 	
 	<form action="usuarioServlet" id="formUsuario" method="post">
 		<ul class="form-style-1">
@@ -31,6 +34,11 @@
 					</tr>
 					
 					<tr>
+						<td>Telefone:</td>
+						<td><input type="text" id="telefone" name="telefone" value="${usuario.telefone}"></td>
+					</tr>
+					
+					<tr>
 						<td>Senha:</td>
 						<td><input type="password" id="senha" name="senha" value="${usuario.senha}"></td>
 					</tr>
@@ -48,17 +56,19 @@
 		<table class="responsive-table">
 			<caption>Usuários cadastrados</caption>
 			<tr>
-				<th>Id</th>
-				<th>Login</th>
-				<th>Nome</th>
-				<th>Excluir</th>
-				<th>Editar</th>
+				<th style="text-align:center;">Id</th>
+				<th style="text-align:center;">Login</th>
+				<th style="text-align:center;">Nome</th>
+				<th style="text-align:center;">Telefone</th>
+				<th style="text-align:center;">Excluir</th>
+				<th style="text-align:center;">Editar</th>
 			</tr>
 			<c:forEach items="${usuarios}" var="usuario">
 				<tr>
 					<td style="width: 150px"><c:out value="${usuario.id}"></c:out></td>
 					<td style="width: 150px"><c:out value="${usuario.login}"></c:out></td>
-					<td><c:out value="${usuario.nome}"></c:out></td>
+					<td style="width: 200px"><c:out value="${usuario.nome}"></c:out></td>
+					<td><c:out value="${usuario.telefone}"></c:out></td>
 					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 				</tr>

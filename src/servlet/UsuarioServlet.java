@@ -84,9 +84,15 @@ public class UsuarioServlet extends HttpServlet {
 			
 			String senha = request.getParameter("senha");
 			
-			Usuario usuario = new Usuario(usuarioId, login, senha, nome);
+			String telefone = request.getParameter("telefone");
 			
-			if((id == null || id.isEmpty()) && daoUsuario.isLoginValido(login)) {
+			Usuario usuario = new Usuario(usuarioId, login, senha, nome, telefone);
+			
+			if(id == null || id.isEmpty() && !daoUsuario.isLoginValido(login)) {
+				
+				request.setAttribute("mensagemDeErro", "O login informado nao pode ser cadastrado novamente!");
+			}	
+			else if((id == null || id.isEmpty()) && daoUsuario.isLoginValido(login)) {
 				
 				daoUsuario.inserir(usuario);
 			}

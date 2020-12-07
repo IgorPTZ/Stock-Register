@@ -10,6 +10,8 @@ public class Usuario {
 	
 	private String senha;
 	
+	private String telefone;
+	
 	public Usuario() {
 		
 	}
@@ -21,7 +23,7 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public Usuario (Long id, String login, String senha, String nome) {
+	public Usuario (Long id, String login, String senha, String nome, String telefone) {
 		
 		this.id = id;
 		
@@ -30,6 +32,8 @@ public class Usuario {
 		this.senha = senha;
 		
 		this.nome = nome;
+		
+		this.telefone = telefone;
 	}
 	
 	public boolean validar(String login, String senha) {
@@ -72,5 +76,13 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 }
