@@ -19,7 +19,7 @@ public class DaoUsuario {
 		connection = SingleConnection.getConnection();
 	}
 	
-	public boolean isLoginValido(String login) {
+	public boolean isLoginUsuarioNovoValido(String login) {
 		
 		try {
 			String sql = "select count(1) as quantidade from usuario where login = '" + login + "'";
@@ -32,6 +32,81 @@ public class DaoUsuario {
 				
 				return ( resultSet.getInt("quantidade") <= 0 );
 			}
+			
+			return false;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean isSenhaDeUsuarioNovoValida(String senha) {
+		
+		try {
+			
+			String sql = "select count(1) as quantidade from usuario where senha = '" + senha + "'";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				return (resultSet.getInt("quantidade") <= 0);
+			}
+			
+			return false;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean isSenhaDeUsuarioAntigoValida(String id, String senha) {
+		
+		try {
+			String sql = "select count (1) as quantidade from usuario where senha = '" + senha + "' and id <> " + id;
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				return (resultSet.getInt("quantidade") <= 0);
+			}
+			
+			return false;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean isLoginUsuarioAntigoValido(String id, String login) {
+		
+		try {
+			String sql = "select count(1) as quantidade from usuario where login = '" + login + "' and id <> " + id;
+		
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				return (resultSet.getInt("quantidade") <= 0);
+			}
+			
+			return false;
 		}
 		catch(Exception e) {
 			

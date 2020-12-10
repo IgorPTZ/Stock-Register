@@ -36,16 +36,6 @@ public class Usuario {
 		this.telefone = telefone;
 	}
 	
-	public boolean validar(String login, String senha) {
-		
-		if(login.equalsIgnoreCase("admin") && senha.equalsIgnoreCase("teste321")) {
-			
-			return true;
-		}
-		
-		return false;
-	}
-
 	public Long getId() {
 		return id;
 	}

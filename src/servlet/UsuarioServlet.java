@@ -65,6 +65,10 @@ public class UsuarioServlet extends HttpServlet {
 		
 		String acao = request.getParameter("acao");
 		
+		String mensagem = "";
+		
+		Boolean validado = true;
+		
 		if(acao != null && acao.equalsIgnoreCase("reset")) {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
@@ -76,7 +80,7 @@ public class UsuarioServlet extends HttpServlet {
 		else {
 			String id = request.getParameter("id");
 			
-			Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : 0;
+			Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : null;
 			
 			String nome  = request.getParameter("nome");
 			
@@ -88,17 +92,44 @@ public class UsuarioServlet extends HttpServlet {
 			
 			Usuario usuario = new Usuario(usuarioId, login, senha, nome, telefone);
 			
-			if(id == null || id.isEmpty() && !daoUsuario.isLoginValido(login)) {
+			if((id == null || id.isEmpty()) && (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha))) {
+					
+				mensagem += "Inserção - O login e/ou a senha informado nao pode ser cadastrado novamente!";	
+					
+				request.setAttribute("mensagem", mensagem);
 				
-				request.setAttribute("mensagemDeErro", "O login informado nao pode ser cadastrado novamente!");
+				validado = false;
 			}	
-			else if((id == null || id.isEmpty()) && daoUsuario.isLoginValido(login)) {
+			else if((id == null || id.isEmpty()) && daoUsuario.isLoginUsuarioNovoValido(login)) {
 				
 				daoUsuario.inserir(usuario);
+				
+				mensagem += "Inserção - O usuario foi inserido com sucesso!";
+				
+				request.setAttribute("mensagem", mensagem);
 			}
 			else if(id != null && id.isEmpty() == false){
 				
-				daoUsuario.atualizar(usuario);
+				if(!daoUsuario.isLoginUsuarioAntigoValido(id, login) || !daoUsuario.isSenhaDeUsuarioAntigoValida(id, senha)) {
+					
+					mensagem += "Edição - O login e/ou a senha informado nao pode ser cadastrado novamente!";
+					
+					request.setAttribute("mensagem", mensagem);
+					
+					validado = false;
+				}
+				else {
+					daoUsuario.atualizar(usuario);
+					
+					mensagem += "Edição - O usuario foi atualizado com sucesso";
+					
+					request.setAttribute("mensagem", mensagem);
+				}
+			}
+			
+			if(validado == false) {
+				
+				request.setAttribute("usuario", usuario);
 			}
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");

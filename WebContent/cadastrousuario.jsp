@@ -11,7 +11,7 @@
 <body>
 	<center>
 		<h2>Cadastro de usuário</h2>
-		<h3 style="color: red;">${mensagemDeErro}</h3>
+		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
 	<form action="usuarioServlet" id="formUsuario" method="post">
