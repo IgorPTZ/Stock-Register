@@ -96,7 +96,7 @@ public class DaoProduto {
 		}
 	}
 	
-	public Produto consultar(String id) {
+	public Produto consultar(Long id) {
 		
 		try {
 			
@@ -171,6 +171,33 @@ public class DaoProduto {
 			preparedStatement.setDouble(3, produto.getValor());
 			
 			preparedStatement.executeUpdate();
+			
+			connection.commit();
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			try {
+				
+				connection.rollback();
+			}
+			catch(SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public void excluir(Long id) {
+		
+		try {
+			
+			String sql = "delete from usuario where id = '" + id + "'";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			preparedStatement.execute();
 			
 			connection.commit();
 		}
