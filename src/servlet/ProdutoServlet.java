@@ -87,7 +87,7 @@ public class ProdutoServlet extends HttpServlet {
 			Long produtoId = !id.isEmpty() ? Long.parseLong(id) : null;
 			
 			String nome = request.getParameter("nome");
-			
+					
 			Produto produto = new Produto(produtoId,
 					                      nome,
 					                      Double.parseDouble(request.getParameter("quantidade")),
@@ -95,13 +95,10 @@ public class ProdutoServlet extends HttpServlet {
 			
 			Boolean ehUmaEdicao = id != null && id.isEmpty() == false;
 			
-			Boolean nomeDoNovoProdutoInvalido = (id == null || id.isEmpty()) &&
-					                            (!daoProduto.isNomeProdutoNovoValido(nome));
-			
 			Boolean nomeDoNovoProdutoValido = (id == null || id.isEmpty()) && 
 					                          daoProduto.isNomeProdutoNovoValido(nome);
 			
-			if(nomeDoNovoProdutoInvalido) {
+			if(nomeDoNovoProdutoValido == false && ehUmaEdicao == false) {
 				
 				mensagem += "Inserção - O nome informado nao pode ser cadastrado novamente!";
 				
@@ -109,7 +106,7 @@ public class ProdutoServlet extends HttpServlet {
 				
 				validado = false;
 			}
-			else if(nomeDoNovoProdutoValido) {
+			else if(nomeDoNovoProdutoValido == true && ehUmaEdicao == false) {
 				
 				daoProduto.inserir(produto);
 				
@@ -119,8 +116,36 @@ public class ProdutoServlet extends HttpServlet {
 			}
 			else if(ehUmaEdicao) {
 				
+				Boolean nomeDoProdutoAntigoInvalido = !daoProduto.isNomeProdutoAntigoValido(id, nome);
 				
+				if(nomeDoProdutoAntigoInvalido) {
+					
+					mensagem += "Edição - O nome informado nao pode ser cadastrado novamente!";
+					
+					request.setAttribute("mensagem", mensagem);
+					
+					validado = false;
+				}
+				else {
+					
+					daoProduto.atualizar(produto);
+					
+					mensagem += "Edição - O usuario foi atualizado com sucesso";
+					
+					request.setAttribute("mensagem", mensagem);
+				}
 			}
+			
+			if(validado == false) {
+				
+				request.setAttribute("produto", produto);
+			}
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastroproduto.jsp");
+			
+			request.setAttribute("produtos", daoProduto.listar());
+			
+			requestDispatcher.forward(request, response);
 		}
 	}
 

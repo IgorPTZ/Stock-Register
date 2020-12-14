@@ -193,7 +193,7 @@ public class DaoProduto {
 		
 		try {
 			
-			String sql = "delete from usuario where id = '" + id + "'";
+			String sql = "delete from produto where id = '" + id + "'";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			

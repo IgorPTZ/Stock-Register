@@ -4,13 +4,13 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Cadastro de usuário</title>
+	<title>Cadastro de clientes</title>
 	<link rel="stylesheet" href="resources/css/cadastro.css">
 </head>
 
 <body>
 	<center>
-		<h2>Cadastro de usuário</h2>
+		<h2>Cadastro de clientes</h2>
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
@@ -54,7 +54,7 @@
 	
 	<div class="container">
 		<table class="responsive-table">
-			<caption>Usuários cadastrados</caption>
+			<caption>Clientes cadastrados</caption>
 			<tr>
 				<th style="text-align:center;">Id</th>
 				<th style="text-align:center;">Login</th>
