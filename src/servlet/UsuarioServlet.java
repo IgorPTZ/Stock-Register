@@ -90,9 +90,24 @@ public class UsuarioServlet extends HttpServlet {
 			
 			String telefone = request.getParameter("telefone");
 			
+			
+			if(nome == null  || nome.isEmpty()  || 
+			   login == null || login.isEmpty() || 
+			   senha == null || senha.isEmpty() ||
+			   telefone == null || telefone.isEmpty()) {
+				
+				validado = false;
+				
+				mensagem = "Nome, login, senha e telefone são campos obrigatórios e não podem estar vazios!";
+				
+				request.setAttribute("mensagem", mensagem);
+			}
+			
 			Usuario usuario = new Usuario(usuarioId, login, senha, nome, telefone);
 			
-			if((id == null || id.isEmpty()) && (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha))) {
+			if((id == null || id.isEmpty()) && 
+			   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
+			   validado == true) {
 					
 				mensagem += "Inserção - O login e/ou a senha informado nao pode ser cadastrado novamente!";	
 					
@@ -100,7 +115,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				validado = false;
 			}	
-			else if((id == null || id.isEmpty()) && daoUsuario.isLoginUsuarioNovoValido(login)) {
+			else if((id == null || id.isEmpty()) && daoUsuario.isLoginUsuarioNovoValido(login) && validado == true) {
 				
 				daoUsuario.inserir(usuario);
 				
@@ -108,7 +123,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				request.setAttribute("mensagem", mensagem);
 			}
-			else if(id != null && id.isEmpty() == false){
+			else if(id != null && id.isEmpty() == false && validado == true){
 				
 				if(!daoUsuario.isLoginUsuarioAntigoValido(id, login) || !daoUsuario.isSenhaDeUsuarioAntigoValida(id, senha)) {
 					

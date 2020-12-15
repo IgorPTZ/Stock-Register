@@ -11,6 +11,7 @@
 <body>
 	<center>
 		<h2>Cadastro de clientes</h2>
+	    <a href="acessoliberado.jsp">Retornar para o menu principal</a>
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
@@ -51,7 +52,7 @@
 			</li>
 		</ul>
 	</form>
-	
+
 	<div class="container">
 		<table class="responsive-table">
 			<caption>Clientes cadastrados</caption>

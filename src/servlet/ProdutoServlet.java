@@ -87,18 +87,31 @@ public class ProdutoServlet extends HttpServlet {
 			Long produtoId = !id.isEmpty() ? Long.parseLong(id) : null;
 			
 			String nome = request.getParameter("nome");
+			
+			Double quantidade = Double.parseDouble(request.getParameter("quantidade"));
+			
+			Double valor = Double.parseDouble(request.getParameter("valor"));
+			
+			if(nome == null || nome.isEmpty()) {
+				
+				validado = false;
+				
+				mensagem = "O nome é um campo obrigatório e não pode estar vazio!";
+				
+				request.setAttribute("mensagem", mensagem);
+			}
 					
 			Produto produto = new Produto(produtoId,
 					                      nome,
-					                      Double.parseDouble(request.getParameter("quantidade")),
-					                      Double.parseDouble(request.getParameter("valor")));
+					                      quantidade,
+					                      valor);
 			
 			Boolean ehUmaEdicao = id != null && id.isEmpty() == false;
 			
 			Boolean nomeDoNovoProdutoValido = (id == null || id.isEmpty()) && 
 					                          daoProduto.isNomeProdutoNovoValido(nome);
 			
-			if(nomeDoNovoProdutoValido == false && ehUmaEdicao == false) {
+			if(nomeDoNovoProdutoValido == false && ehUmaEdicao == false && validado == true) {
 				
 				mensagem += "Inserção - O nome informado nao pode ser cadastrado novamente!";
 				
@@ -106,7 +119,7 @@ public class ProdutoServlet extends HttpServlet {
 				
 				validado = false;
 			}
-			else if(nomeDoNovoProdutoValido == true && ehUmaEdicao == false) {
+			else if(nomeDoNovoProdutoValido == true && ehUmaEdicao == false && validado == true) {
 				
 				daoProduto.inserir(produto);
 				
@@ -114,7 +127,7 @@ public class ProdutoServlet extends HttpServlet {
 				
 				request.setAttribute("mensagem", mensagem);
 			}
-			else if(ehUmaEdicao) {
+			else if(ehUmaEdicao && validado == true) {
 				
 				Boolean nomeDoProdutoAntigoInvalido = !daoProduto.isNomeProdutoAntigoValido(id, nome);
 				
