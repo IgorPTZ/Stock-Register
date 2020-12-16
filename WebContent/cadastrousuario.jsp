@@ -15,7 +15,7 @@
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
-	<form action="usuarioServlet" id="formUsuario" method="post">
+	<form action="usuarioServlet" id="formUsuario" method="post" onsubmit="return validarCamposDoFormulario()">
 		<ul class="form-style-1">
 			<li>
 				<table>
@@ -76,6 +76,34 @@
 			</c:forEach>
 		</table>
 	</div>
-</body>
 	
+	<script type="text/javascript">
+		function validarCamposDoFormulario() {
+			
+			if(document.getElementById("nome").value == '') {
+				
+				alert('O campo nome é obrigatório!');
+				return false;
+			}
+			else if(document.getElementById("login").value == '') {
+				
+				alert('O campo login é obrigatório!');
+				return false;
+			}
+			else if(document.getElementById("telefone").value == '') {
+				
+				alert('O campo telefone é obrigatório!');
+				return false;
+			}
+			else if(document.getElementById("senha").value == '') {
+				
+				alert('O campo senha é obrigatório!');
+				return false;
+			}
+			
+			return true;
+		}
+	</script>	
+</body>
+
 </html>

@@ -88,28 +88,38 @@ public class ProdutoServlet extends HttpServlet {
 			
 			String nome = request.getParameter("nome");
 			
-			Double quantidade = Double.parseDouble(request.getParameter("quantidade"));
+			Boolean parametrosInvalidos = nome == null || nome.isEmpty() || 
+					                      request.getParameter("valor") == null || request.getParameter("valor").isEmpty() ||
+					                      request.getParameter("quantidade") == null || request.getParameter("quantidade").isEmpty();
 			
-			Double valor = Double.parseDouble(request.getParameter("valor"));
+			Produto produto = null;
 			
-			if(nome == null || nome.isEmpty()) {
+			if(parametrosInvalidos) {
 				
 				validado = false;
 				
-				mensagem = "O nome é um campo obrigatório e não pode estar vazio!";
+				mensagem = "Os campos nome, quantidade e valor são obrigatórios e não podem estar vazios!";
 				
 				request.setAttribute("mensagem", mensagem);
+				
+				produto = new Produto(produtoId,
+	                      nome,
+	                      0.0,
+	                      0.0);
 			}
-					
-			Produto produto = new Produto(produtoId,
-					                      nome,
-					                      quantidade,
-					                      valor);
+			else {
+
+				produto = new Produto(produtoId,
+	                      nome,
+	                      Double.parseDouble(request.getParameter("quantidade")),
+	                      Double.parseDouble(request.getParameter("valor")));
+			}
 			
 			Boolean ehUmaEdicao = id != null && id.isEmpty() == false;
 			
 			Boolean nomeDoNovoProdutoValido = (id == null || id.isEmpty()) && 
 					                          daoProduto.isNomeProdutoNovoValido(nome);
+			
 			
 			if(nomeDoNovoProdutoValido == false && ehUmaEdicao == false && validado == true) {
 				
