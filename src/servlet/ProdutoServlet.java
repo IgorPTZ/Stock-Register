@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Produto;
 import dao.DaoProduto;
+import util.Utils;
 
 
 @WebServlet("/produtoServlet")
@@ -88,26 +89,47 @@ public class ProdutoServlet extends HttpServlet {
 			
 			String nome = request.getParameter("nome");
 			
-			Boolean parametrosInvalidos = nome == null || nome.isEmpty() || 
-					                      request.getParameter("valor") == null || request.getParameter("valor").isEmpty() ||
-					                      request.getParameter("quantidade") == null || request.getParameter("quantidade").isEmpty();
+			String quantidade = request.getParameter("quantidade");
+			
+			String valor = request.getParameter("valor");
+			
+			Boolean valorEQuantidadeNaoSaoNumeros = Utils.isNumerico(quantidade) == false || 
+					                                Utils.isNumerico(valor) == false;
+			
+			Boolean parametrosSaoNulosOuVazios = nome == null || nome.isEmpty() || 
+					                      quantidade == null || quantidade.isEmpty() ||
+					                      valor == null || valor.isEmpty();
 			
 			Produto produto = null;
 			
-			if(parametrosInvalidos) {
+			if(valorEQuantidadeNaoSaoNumeros) {
 				
 				validado = false;
 				
-				mensagem = "Os campos nome, quantidade e valor são obrigatórios e não podem estar vazios!";
+				mensagem += "Os valores de quantidade e valor devem ser númericos!\n";
 				
 				request.setAttribute("mensagem", mensagem);
 				
 				produto = new Produto(produtoId,
-	                      nome,
-	                      0.0,
-	                      0.0);
+						              nome,
+						              0.0,
+						              0.0);
 			}
-			else {
+			
+			if(parametrosSaoNulosOuVazios) {
+				
+				validado = false;
+				
+				mensagem += "Os campos nome, quantidade e valor são obrigatórios e não podem estar vazios!";	
+				
+				request.setAttribute("mensagem", mensagem);
+				
+				produto = new Produto(produtoId,
+	                                  nome,
+	                                  0.0,
+	                                  0.0);
+			}
+			else if(validado == true){
 
 				produto = new Produto(produtoId,
 	                      nome,

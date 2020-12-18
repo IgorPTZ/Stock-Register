@@ -16,7 +16,7 @@
 			<h3 style="color: red;">${mensagem}</h3>
 		</center>
 		
-		<form action="produtoServlet" id="formProduto" method="post">
+		<form action="produtoServlet" id="formProduto" method="post" onsubmit="return validarCamposDoFormulario()">
 			<ul class="form-style-1">
 				<li>
 					<table>
@@ -72,6 +72,30 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</div>	
+		</div>
+		
+		<script type="text/javascript">
+			
+			function validarCamposDoFormulario() {
+				
+				if(document.getElementById("nome").value == '') {
+					
+					alert('O campo nome é obrigatório!');
+					return false;
+				}
+				else if(document.getElementById("quantidade").value == '') {
+					
+					alert('O campo quantidade é obrigatorio!');
+					return false;
+				}
+				else if(document.getElementById("valor").value == '') {
+					
+					alert('O campo valor é obrigatório!');
+					return false;
+				}
+				
+				return true;
+			}
+		</script>	
 	</body>
 </html>
