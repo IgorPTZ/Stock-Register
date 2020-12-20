@@ -12,7 +12,8 @@
 	<body>
 		<center>
 			<h2>Cadastro de produtos</h2>
-			<a href="acessoliberado.jsp">Retornar para o menu principal</a>
+			<a href="acessoliberado.jsp">Retornar para o menu principal</a><br/>
+			<a href="index.jsp">Sair</a>
 			<h3 style="color: red;">${mensagem}</h3>
 		</center>
 		
