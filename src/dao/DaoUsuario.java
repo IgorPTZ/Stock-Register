@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone) values (?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -131,6 +131,18 @@ public class DaoUsuario {
 			preparedStatement.setString(3, usuario.getNome());
 			
 			preparedStatement.setString(4, usuario.getTelefone());
+			
+			preparedStatement.setString(5, usuario.getCep());
+			
+			preparedStatement.setString(6, usuario.getRua());
+			
+			preparedStatement.setString(7, usuario.getBairro());
+			
+			preparedStatement.setString(8, usuario.getCidade());
+			
+			preparedStatement.setString(9, usuario.getUf());
+			
+			preparedStatement.setString(10, usuario.getIbge());
 			
 			preparedStatement.execute();
 			
@@ -166,7 +178,13 @@ public class DaoUsuario {
 						                      resultSet.getString("login"), 
 						                      resultSet.getString("senha"),
 						                      resultSet.getString("nome"),
-						                      resultSet.getString("telefone"));
+						                      resultSet.getString("telefone"),
+						                      resultSet.getString("cep"),
+						                      resultSet.getString("rua"),
+						                      resultSet.getString("bairro"),
+						                      resultSet.getString("cidade"),
+						                      resultSet.getString("uf"),
+						                      resultSet.getString("ibge"));
 				 
 				return usuario;
 			}
@@ -197,7 +215,13 @@ public class DaoUsuario {
 						                      resultSet.getString("login"), 
 						                      resultSet.getString("senha"),
 						                      resultSet.getString("nome"),
-						                      resultSet.getString("telefone"));
+						                      resultSet.getString("telefone"),
+						                      resultSet.getString("cep"),
+						                      resultSet.getString("rua"),
+						                      resultSet.getString("bairro"),
+						                      resultSet.getString("cidade"),
+						                      resultSet.getString("uf"),
+						                      resultSet.getString("ibge"));
 				
 				usuarios.add(usuario);
 			}
@@ -216,7 +240,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ? where id = " + usuario.getId();
+			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ? where id = " + usuario.getId();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -227,6 +251,18 @@ public class DaoUsuario {
 			preparedStatement.setString(3, usuario.getNome());
 			
 			preparedStatement.setString(4, usuario.getTelefone());
+			
+			preparedStatement.setString(5, usuario.getCep());
+			
+			preparedStatement.setString(6, usuario.getRua());
+			
+			preparedStatement.setString(7, usuario.getBairro());
+			
+			preparedStatement.setString(8, usuario.getCidade());
+			
+			preparedStatement.setString(9, usuario.getUf());
+			
+			preparedStatement.setString(10, usuario.getIbge());
 			
 			preparedStatement.executeUpdate();
 			

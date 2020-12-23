@@ -90,6 +90,17 @@ public class UsuarioServlet extends HttpServlet {
 			
 			String telefone = request.getParameter("telefone");
 			
+			String cep = request.getParameter("cep");
+			
+			String rua = request.getParameter("rua");
+			
+			String bairro = request.getParameter("bairro");
+			
+			String cidade = request.getParameter("cidade");
+			
+			String uf = request.getParameter("uf");
+			
+			String ibge = request.getParameter("ibge");
 			
 			if(nome == null  || nome.isEmpty()  || 
 			   login == null || login.isEmpty() || 
@@ -103,7 +114,17 @@ public class UsuarioServlet extends HttpServlet {
 				request.setAttribute("mensagem", mensagem);
 			}
 			
-			Usuario usuario = new Usuario(usuarioId, login, senha, nome, telefone);
+			Usuario usuario = new Usuario(usuarioId, 
+					                      login, 
+					                      senha, 
+					                      nome, 
+					                      telefone,
+					                      cep,
+					                      rua,
+					                      bairro,
+					                      cidade,
+					                      uf,
+					                      ibge);
 			
 			if((id == null || id.isEmpty()) && 
 			   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 

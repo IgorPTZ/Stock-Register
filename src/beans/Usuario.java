@@ -48,6 +48,41 @@ public class Usuario {
 		this.telefone = telefone;
 	}
 	
+	public Usuario(Long id, 
+			       String login,
+			       String senha,
+			       String nome, 
+			       String telefone,
+			       String cep,
+			       String rua,
+			       String bairro,
+			       String cidade,
+			       String uf,
+			       String ibge) {
+		
+		this.id = id;
+		
+		this.login = login;
+		
+		this.senha = senha;
+		
+		this.nome = nome;
+		
+		this.telefone = telefone;
+		
+		this.cep = cep;
+		
+		this.rua = rua;
+		
+		this.bairro = bairro;
+		
+		this.cidade = cidade;
+		
+		this.uf = uf;
+		
+		this.ibge = ibge;
+	}
+	
 	public Long getId() {
 		return id;
 	}
