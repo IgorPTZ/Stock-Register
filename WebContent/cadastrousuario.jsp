@@ -26,56 +26,46 @@
 					<tr>
 						<td>Código:</td>
 						<td><input type="text" readonly="readonly" id="id" name="id" class="field-long" value="${usuario.id}"></td>
+						
+						<td>Cep:</td>
+						<td><input type="text" id="cep" name="cep" onblur="consultarCep();" value="${usuario.cep}"></td>
 					<tr/>
 					
 					<tr>
 						<td>Nome:</td>
 						<td><input type="text" id="nome" name="nome" value="${usuario.nome}"></td>
+						
+						<td>Rua:</td>
+						<td><input type="text" id="rua" name="rua" value="${usuario.rua}"></td>
 					</tr>
 									
 					<tr>
 						<td>Login:</td>
 						<td><input type="text" id="login" name="login" value="${usuario.login}"></td>
+						
+						<td>Bairro:</td>
+						<td><input type="text" id="bairro" name="bairro" value="${usuario.bairro}"></td>
 					</tr>
 					
 					<tr>
 						<td>Telefone:</td>
 						<td><input type="text" id="telefone" name="telefone" value="${usuario.telefone}"></td>
+						
+						<td>Cidade:</td>
+						<td><input type="text" id="cidade" name="cidade" value="${usuario.cidade}"></td>
 					</tr>
 					
 					<tr>
 						<td>Senha:</td>
 						<td><input type="password" id="senha" name="senha" value="${usuario.senha}"></td>
-					</tr>
-					
-					<tr>
-						<td>Cep:</td>
-						<td><input type="text" id="cep" name="cep" onblur="consultarCep();"></td>
-					</tr>
-					
-					<tr>
-						<td>Rua:</td>
-						<td><input type="text" id="rua" name="rua"></td>
-					</tr>
-					
-					<tr>
-						<td>Bairro:</td>
-						<td><input type="text" id="bairro" name="bairro"></td>
-					</tr>
-					
-					<tr>
-						<td>Cidade:</td>
-						<td><input type="text" id="cidade" name="cidade"></td>
-					</tr>
-					
-					<tr>
+						
 						<td>Estado:</td>
-						<td><input type="text" id="uf" name="uf"></td>
+						<td><input type="text" id="uf" name="uf" value="${usuario.uf}"></td>
 					</tr>
-					
+								
 					<tr>
 						<td>IBGE:</td>
-						<td><input type="text" id="ibge" name="ibge"></td>
+						<td><input type="text" id="ibge" name="ibge" value="${usuario.ibge}"></td>
 					</tr>
 					
 					<tr>
