@@ -4,69 +4,29 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Cadastro de clientes</title>
+	<title>Cadastro de telefones</title>
 	<link rel="stylesheet" href="resources/css/cadastro.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 	<center>
-		<h2>Cadastro de clientes</h2>
-	    <a href="acessoliberado.jsp">Retornar para o menu principal</a><br/>
-	    <a href="index.jsp">Sair</a>
+		<h2>Cadastro de telefones</h2>
+	    <a href="acessoliberado.jsp">Retornar para o cadastro de usuarios</a><br/>
+	    <a href="cadastrousuario.jsp">Sair</a>
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
-	<form action="usuarioServlet" id="formUsuario" method="post" onsubmit="return validarCamposDoFormulario()">
+	<form action="telefonesServlet" id="formTelefone" method="post" onsubmit="return validarCamposDoFormulario()">
 		<ul class="form-style-1">
 			<li>
 				<table>
 					<tr>
 						<td>Código:</td>
-						<td><input type="text" readonly="readonly" id="id" name="id" class="field-long" value="${usuario.id}"></td>
-						
-						<td>Cep:</td>
-						<td><input type="text" id="cep" name="cep" onblur="consultarCep();" value="${usuario.cep}"></td>
+						<td><input type="text" readonly="readonly" id="id" name="id" class="field-long"></td>
 					<tr/>
 					
-					<tr>
-						<td>Nome:</td>
-						<td><input type="text" id="nome" name="nome" value="${usuario.nome}"></td>
-						
-						<td>Rua:</td>
-						<td><input type="text" id="rua" name="rua" value="${usuario.rua}"></td>
-					</tr>
-									
-					<tr>
-						<td>Login:</td>
-						<td><input type="text" id="login" name="login" value="${usuario.login}"></td>
-						
-						<td>Bairro:</td>
-						<td><input type="text" id="bairro" name="bairro" value="${usuario.bairro}"></td>
-					</tr>
-					
-					<tr>
-						<td>Telefone:</td>
-						<td><input type="text" id="telefone" name="telefone" value="${usuario.telefone}"></td>
-						
-						<td>Cidade:</td>
-						<td><input type="text" id="cidade" name="cidade" value="${usuario.cidade}"></td>
-					</tr>
-					
-					<tr>
-						<td>Senha:</td>
-						<td><input type="password" id="senha" name="senha" value="${usuario.senha}"></td>
-						
-						<td>Estado:</td>
-						<td><input type="text" id="uf" name="uf" value="${usuario.uf}"></td>
-					</tr>
-								
-					<tr>
-						<td>IBGE:</td>
-						<td><input type="text" id="ibge" name="ibge" value="${usuario.ibge}"></td>
-					</tr>
+	
 					
 					<tr>
 						<td></td>
@@ -80,7 +40,7 @@
 
 	<div class="container">
 		<table class="responsive-table">
-			<caption>Clientes cadastrados</caption>
+			<caption>Telefones cadastrados</caption>
 			<tr>
 				<th style="text-align:center;">Id</th>
 				<th style="text-align:center;">Login</th>
