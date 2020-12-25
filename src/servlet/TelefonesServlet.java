@@ -9,11 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Usuario;
+import dao.DaoUsuario;
+
 
 @WebServlet("/telefonesServlet")
 public class TelefonesServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private DaoUsuario daoUsuario = new DaoUsuario();
 
     public TelefonesServlet() {
         super();
@@ -23,11 +28,15 @@ public class TelefonesServlet extends HttpServlet {
 	
 		String usuarioId = request.getParameter("usuarioId");
 		
-		request.getSession().setAttribute("usuarioId", usuarioId);	
+		Usuario usuario = daoUsuario.consultar(Long.parseLong(usuarioId));
+		
+		request.getSession().setAttribute("usuarioSelecionado", usuario);	
 		
 		RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
 		
-		//request.setAttribute("", "");
+		request.setAttribute("usuarioSelecionado", usuario);
+		
+		request.setAttribute("mensagem", "Telefone salvo com sucesso!");
 		
 		view.forward(request, response);
 	}
