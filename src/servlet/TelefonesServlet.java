@@ -30,19 +30,28 @@ public class TelefonesServlet extends HttpServlet {
 		
 		Usuario usuario = daoUsuario.consultar(Long.parseLong(usuarioId));
 		
-		request.getSession().setAttribute("usuarioSelecionado", usuario);	
-		
-		RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
+		request.getSession().setAttribute("usuarioSelecionado", usuario);
 		
 		request.setAttribute("usuarioSelecionado", usuario);
 		
-		request.setAttribute("mensagem", "Telefone salvo com sucesso!");
+		RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
 		
 		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioSelecionado");
+		
+		String numero = request.getParameter("numero");
+		
+		String tipo   = request.getParameter("tipo");
+		
+		request.setAttribute("mensagem", "Telefone salvo com sucesso!");
+		
+		RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
+		
+		view.forward(request, response);
 	}
 
 }

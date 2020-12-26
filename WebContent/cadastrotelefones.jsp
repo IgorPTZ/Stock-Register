@@ -35,17 +35,18 @@
 					<tr>
 						<td>Número:</td>
 						<td><input type="text" id="numero" name="numero" class="field-long"></td>
-					</tr>
-					
-					<tr>
-						<td>Tipo:</td>
-						<td><input type="text" id="tipo" name="tipo" class="field-long"></td>
-					</tr>
-					
+						
+						<td>
+							<select id="tipo" name="tipo">
+								<option>Fixo</option>
+								<option>Celular</option>
+							</select>
+						</td>
+					</tr>	
+		
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Salvar"> 
-						    <input type="submit" value="Cancelar" onclick="document.getElementById('formUsuario').action = 'usuarioServlet?acao=reset'"></td>
+						<td><input type="submit" value="Salvar"></td>
 					</tr>
 				</table>
 			</li>
@@ -81,12 +82,7 @@
 				alert('O campo número é obrigatório!');
 				return false;
 			}
-			else if(document.getElementById("tipo").value == '') {
-				
-				alert('O campo tipo é obrigatório!');
-				return false;
-			}
-			
+
 			return true;
 		}
 	</script>	
