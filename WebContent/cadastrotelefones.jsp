@@ -12,8 +12,8 @@
 <body>
 	<center>
 		<h2>Cadastro de telefones</h2>
-	    <a href="acessoliberado.jsp">Retornar para o cadastro de usuarios</a><br/>
-	    <a href="cadastrousuario.jsp">Sair</a>
+	    <a href="usuarioServlet?acao=listall">Retornar para o cadastro de usuarios</a><br/>
+	    <a href="index.jsp">Sair</a>
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
@@ -26,11 +26,6 @@
 						<td><input type="text" readonly="readonly" id="usuarioId" name="usuarioId" value="${usuarioSelecionado.id}" class="field-long"></td>
 						<td><input type="text" readonly="readonly" id="usuarioNome" name="usuarioNome" value="${usuarioSelecionado.nome}" class="field-long"></td>
 					</tr>
-				
-					<tr>
-						<td>Código:</td>
-						<td><input type="text" readonly="readonly" id="id" name="id" class="field-long"></td>
-					<tr/>
 					
 					<tr>
 						<td>Número:</td>
@@ -68,7 +63,6 @@
 					<td style="width: 150px"><c:out value="${telefone.numero}"></c:out></td>
 					<td style="width: 200px"><c:out value="${telefone.tipo}"></c:out></td>
 					<td><a href="telefonesServlet?acao=delete&id=${telefone.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
-					<td><a href="telefonesServlet?acao=put&id=${telefone.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 				</tr>
 			</c:forEach>
 		</table>

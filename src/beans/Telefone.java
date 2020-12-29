@@ -10,6 +10,13 @@ public class Telefone {
 	
 	private Long usuario;
 	
+	public Telefone(String numero, String tipo, Long usuario) {
+		
+		this.numero  = numero;
+		this.tipo    = tipo;
+		this.usuario = usuario;
+	}
+	
 	public Telefone(Long id, String numero, String tipo, Long usuario) {
 		
 		this.id      = id;

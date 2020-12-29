@@ -80,13 +80,13 @@ public class DaoTelefone {
 		return null;
 	}
 	
-	public List<Telefone> listar() {
+	public List<Telefone> listar(Long usuario) {
 		
 		try {
 			
 			List<Telefone> telefones = new ArrayList<Telefone>();
 			
-			String sql = "select * from usuario_telefone";
+			String sql = "select * from usuario_telefone where usuario = " + usuario;
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			

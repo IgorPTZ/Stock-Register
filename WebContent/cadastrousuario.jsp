@@ -98,7 +98,7 @@
 					<td><c:out value="${usuario.telefone}"></c:out></td>
 					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
-					<td><a href="telefonesServlet?acao=telefone&usuarioId=${usuario.id}"><img src="resources/img/telefones.png" title="Telefones" width="20px" height="20px"></a></td>
+					<td><a href="telefonesServlet?acao=addTelefone&usuarioId=${usuario.id}"><img src="resources/img/telefones.png" title="Telefones" width="20px" height="20px"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
