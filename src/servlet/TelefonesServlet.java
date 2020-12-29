@@ -47,7 +47,20 @@ public class TelefonesServlet extends HttpServlet {
 			view.forward(request, response);
 		}
 		else if(request.getParameter("acao").equals("delete")) {
+			
 			String telefoneId = request.getParameter("id");
+			
+			daoTelefone.excluir(Long.parseLong(telefoneId));
+			
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioSelecionado");
+			
+			request.setAttribute("mensagem", "Telefone excluído com sucesso!");
+			
+			request.setAttribute("telefones", daoTelefone.listar(usuario.getId()));
+			
+			RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
+			
+			view.forward(request, response);
 		}
 
 	}

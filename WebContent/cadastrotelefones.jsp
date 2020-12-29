@@ -29,7 +29,7 @@
 					
 					<tr>
 						<td>Número:</td>
-						<td><input type="text" id="numero" name="numero" class="field-long"></td>
+						<td><input type="text" id="numero" name="numero" placeholder="Informe o DDD + número" class="field-long"></td>
 						
 						<td>
 							<select id="tipo" name="tipo">

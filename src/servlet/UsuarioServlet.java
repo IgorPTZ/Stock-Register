@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import beans.Usuario;
 import dao.DaoUsuario;
 
@@ -63,116 +65,130 @@ public class UsuarioServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String acao = request.getParameter("acao");
-		
-		String mensagem = "";
-		
-		Boolean validado = true;
-		
-		if(acao != null && acao.equalsIgnoreCase("reset")) {
+		try {
+			String acao = request.getParameter("acao");
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
+			String mensagem = "";
 			
-			request.setAttribute("usuarios", daoUsuario.listar());
+			Boolean validado = true;
 			
-			requestDispatcher.forward(request, response);
-		}
-		else {
-			String id = request.getParameter("id");
-			
-			Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : null;
-			
-			String nome  = request.getParameter("nome");
-			
-			String login = request.getParameter("login");
-			
-			String senha = request.getParameter("senha");
-			
-			String telefone = request.getParameter("telefone");
-			
-			String cep = request.getParameter("cep");
-			
-			String rua = request.getParameter("rua");
-			
-			String bairro = request.getParameter("bairro");
-			
-			String cidade = request.getParameter("cidade");
-			
-			String uf = request.getParameter("uf");
-			
-			String ibge = request.getParameter("ibge");
-			
-			if(nome == null  || nome.isEmpty()  || 
-			   login == null || login.isEmpty() || 
-			   senha == null || senha.isEmpty() ||
-			   telefone == null || telefone.isEmpty()) {
+			if(acao != null && acao.equalsIgnoreCase("reset")) {
 				
-				validado = false;
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 				
-				mensagem = "Nome, login, senha e telefone são campos obrigatórios e não podem estar vazios!";
+				request.setAttribute("usuarios", daoUsuario.listar());
 				
-				request.setAttribute("mensagem", mensagem);
+				requestDispatcher.forward(request, response);
 			}
-			
-			Usuario usuario = new Usuario(usuarioId, 
-					                      login, 
-					                      senha, 
-					                      nome, 
-					                      telefone,
-					                      cep,
-					                      rua,
-					                      bairro,
-					                      cidade,
-					                      uf,
-					                      ibge);
-			
-			if((id == null || id.isEmpty()) && 
-			   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
-			   validado == true) {
+			else {
+				/* Inicio - Upload e arquivos */
+				
+				if(ServletFileUpload.isMultipartContent(request)) {
 					
-				mensagem += "Inserção - O login e/ou a senha informado nao pode ser cadastrado novamente!";	
+				}
+				
+				/* Fim - Upload de arquivos */
+				
+				String id = request.getParameter("id");
+				
+				Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : null;
+				
+				String nome  = request.getParameter("nome");
+				
+				String login = request.getParameter("login");
+				
+				String senha = request.getParameter("senha");
+				
+				String telefone = request.getParameter("telefone");
+				
+				String cep = request.getParameter("cep");
+				
+				String rua = request.getParameter("rua");
+				
+				String bairro = request.getParameter("bairro");
+				
+				String cidade = request.getParameter("cidade");
+				
+				String uf = request.getParameter("uf");
+				
+				String ibge = request.getParameter("ibge");
+				
+				if(nome == null  || nome.isEmpty()  || 
+				   login == null || login.isEmpty() || 
+				   senha == null || senha.isEmpty() ||
+				   telefone == null || telefone.isEmpty()) {
 					
-				request.setAttribute("mensagem", mensagem);
-				
-				validado = false;
-			}	
-			else if((id == null || id.isEmpty()) && daoUsuario.isLoginUsuarioNovoValido(login) && validado == true) {
-				
-				daoUsuario.inserir(usuario);
-				
-				mensagem += "Inserção - O usuario foi inserido com sucesso!";
-				
-				request.setAttribute("mensagem", mensagem);
-			}
-			else if(id != null && id.isEmpty() == false && validado == true){
-				
-				if(!daoUsuario.isLoginUsuarioAntigoValido(id, login) || !daoUsuario.isSenhaDeUsuarioAntigoValida(id, senha)) {
+					validado = false;
 					
-					mensagem += "Edição - O login e/ou a senha informado nao pode ser cadastrado novamente!";
+					mensagem = "Nome, login, senha e telefone são campos obrigatórios e não podem estar vazios!";
 					
+					request.setAttribute("mensagem", mensagem);
+				}
+				
+				Usuario usuario = new Usuario(usuarioId, 
+						                      login, 
+						                      senha, 
+						                      nome, 
+						                      telefone,
+						                      cep,
+						                      rua,
+						                      bairro,
+						                      cidade,
+						                      uf,
+						                      ibge);
+				
+				if((id == null || id.isEmpty()) && 
+				   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
+				   validado == true) {
+						
+					mensagem += "Inserção - O login e/ou a senha informado nao pode ser cadastrado novamente!";	
+						
 					request.setAttribute("mensagem", mensagem);
 					
 					validado = false;
-				}
-				else {
-					daoUsuario.atualizar(usuario);
+				}	
+				else if((id == null || id.isEmpty()) && daoUsuario.isLoginUsuarioNovoValido(login) && validado == true) {
 					
-					mensagem += "Edição - O usuario foi atualizado com sucesso";
+					daoUsuario.inserir(usuario);
+					
+					mensagem += "Inserção - O usuario foi inserido com sucesso!";
 					
 					request.setAttribute("mensagem", mensagem);
 				}
-			}
-			
-			if(validado == false) {
+				else if(id != null && id.isEmpty() == false && validado == true){
+					
+					if(!daoUsuario.isLoginUsuarioAntigoValido(id, login) || !daoUsuario.isSenhaDeUsuarioAntigoValida(id, senha)) {
+						
+						mensagem += "Edição - O login e/ou a senha informado nao pode ser cadastrado novamente!";
+						
+						request.setAttribute("mensagem", mensagem);
+						
+						validado = false;
+					}
+					else {
+						daoUsuario.atualizar(usuario);
+						
+						mensagem += "Edição - O usuario foi atualizado com sucesso";
+						
+						request.setAttribute("mensagem", mensagem);
+					}
+				}
 				
-				request.setAttribute("usuario", usuario);
+				if(validado == false) {
+					
+					request.setAttribute("usuario", usuario);
+				}
+				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
+				
+				request.setAttribute("usuarios", daoUsuario.listar());
+				
+				requestDispatcher.forward(request, response);
 			}
+		}
+		catch(Exception e) {
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
-			
-			request.setAttribute("usuarios", daoUsuario.listar());
-			
-			requestDispatcher.forward(request, response);
+			e.printStackTrace();
 		}
 	}
 }

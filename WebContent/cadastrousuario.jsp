@@ -19,53 +19,58 @@
 		<h3 style="color: red;">${mensagem}</h3>
 	</center>
 	
-	<form action="usuarioServlet" id="formUsuario" method="post" onsubmit="return validarCamposDoFormulario()">
+	<form action="usuarioServlet" id="formUsuario" method="post" onsubmit="return validarCamposDoFormulario()" enctype="multipart/form-data">
 		<ul class="form-style-1">
 			<li>
 				<table>
 					<tr>
 						<td>Código:</td>
-						<td><input type="text" readonly="readonly" id="id" name="id" class="field-long" value="${usuario.id}"></td>
+						<td><input type="text" readonly="readonly" id="id" name="id" value="${usuario.id}"></td>
 						
 						<td>Cep:</td>
-						<td><input type="text" id="cep" name="cep" onblur="consultarCep();" value="${usuario.cep}"></td>
+						<td><input type="text" id="cep" name="cep" placeholder="Informe o cep" onblur="consultarCep();" value="${usuario.cep}"></td>
 					<tr/>
 					
 					<tr>
 						<td>Nome:</td>
-						<td><input type="text" id="nome" name="nome" value="${usuario.nome}"></td>
+						<td><input type="text" id="nome" name="nome" placeholder="Informe o nome completo" value="${usuario.nome}"></td>
 						
 						<td>Rua:</td>
-						<td><input type="text" id="rua" name="rua" value="${usuario.rua}"></td>
+						<td><input type="text" id="rua" name="rua" placeholder="Informe a rua" value="${usuario.rua}"></td>
 					</tr>
 									
 					<tr>
 						<td>Login:</td>
-						<td><input type="text" id="login" name="login" value="${usuario.login}"></td>
+						<td><input type="text" id="login" name="login" placeholder="Informe o login" value="${usuario.login}"></td>
 						
 						<td>Bairro:</td>
-						<td><input type="text" id="bairro" name="bairro" value="${usuario.bairro}"></td>
+						<td><input type="text" id="bairro" name="bairro" placeholder="Informe o bairro" value="${usuario.bairro}"></td>
 					</tr>
 					
 					<tr>
 						<td>Telefone:</td>
-						<td><input type="text" id="telefone" name="telefone" value="${usuario.telefone}"></td>
+						<td><input type="text" id="telefone" name="telefone" placeholder="Informe o telefone" value="${usuario.telefone}"></td>
 						
 						<td>Cidade:</td>
-						<td><input type="text" id="cidade" name="cidade" value="${usuario.cidade}"></td>
+						<td><input type="text" id="cidade" name="cidade" placeholder="Informe a cidade" value="${usuario.cidade}"></td>
 					</tr>
 					
 					<tr>
 						<td>Senha:</td>
-						<td><input type="password" id="senha" name="senha" value="${usuario.senha}"></td>
+						<td><input type="password" id="senha" name="senha" placeholder="Informe a senha" value="${usuario.senha}"></td>
 						
 						<td>Estado:</td>
-						<td><input type="text" id="uf" name="uf" value="${usuario.uf}"></td>
+						<td><input type="text" id="uf" name="uf" placeholder="Informe o estado" value="${usuario.uf}"></td>
 					</tr>
 								
 					<tr>
 						<td>IBGE:</td>
-						<td><input type="text" id="ibge" name="ibge" value="${usuario.ibge}"></td>
+						<td><input type="text" id="ibge" name="ibge" placeholder="Informe o código IBGE" value="${usuario.ibge}"></td>
+					</tr>
+					
+					<tr>
+						<td>Foto:</td>
+						<td><input type="file" name="foto"></td>
 					</tr>
 					
 					<tr>
