@@ -184,7 +184,9 @@ public class DaoUsuario {
 						                      resultSet.getString("bairro"),
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
-						                      resultSet.getString("ibge"));
+						                      resultSet.getString("ibge"),
+						                      null,
+						                      null);
 				 
 				return usuario;
 			}
@@ -221,7 +223,9 @@ public class DaoUsuario {
 						                      resultSet.getString("bairro"),
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
-						                      resultSet.getString("ibge"));
+						                      resultSet.getString("ibge"),
+						                      null,
+						                      null);
 				
 				usuarios.add(usuario);
 			}

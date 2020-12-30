@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import beans.Usuario;
 import dao.DaoUsuario;
@@ -81,17 +86,12 @@ public class UsuarioServlet extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 			else {
-				/* Inicio - Upload e arquivos */
-				
-				if(ServletFileUpload.isMultipartContent(request)) {
 					
-				}
-				
-				/* Fim - Upload de arquivos */
+				String[] informacoesDaFoto = obterImagemEnviada(request);
 				
 				String id = request.getParameter("id");
 				
-				Long usuarioId = !id.isEmpty() ? Long.parseLong(id) : null;
+				Long usuarioId = (id != null && !id.isEmpty()) ? Long.parseLong(id) : null;
 				
 				String nome  = request.getParameter("nome");
 				
@@ -135,7 +135,9 @@ public class UsuarioServlet extends HttpServlet {
 						                      bairro,
 						                      cidade,
 						                      uf,
-						                      ibge);
+						                      ibge,
+						                      informacoesDaFoto[0],
+						                      informacoesDaFoto[1]);
 				
 				if((id == null || id.isEmpty()) && 
 				   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
@@ -190,5 +192,35 @@ public class UsuarioServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("static-access")
+	private String[] obterImagemEnviada(HttpServletRequest request) throws FileUploadException {
+		
+		/* Inicio - Upload e arquivos */
+		
+		String[] informacoesDaImagem = new String[2];
+		
+		if(ServletFileUpload.isMultipartContent(request)) {
+			
+			List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+			
+			for (FileItem fileItem : fileItems) {
+				
+				if(fileItem.getFieldName().equals("foto")) {
+					
+					informacoesDaImagem[0] = new Base64().encodeBase64String(fileItem.get());
+					
+					informacoesDaImagem[1] = fileItem.getContentType();
+					
+					System.out.println(informacoesDaImagem[0]);
+				}
+				
+			}
+		}
+		
+		/* Fim - Upload de arquivos */
+		
+		return informacoesDaImagem;
 	}
 }

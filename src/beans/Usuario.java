@@ -24,6 +24,10 @@ public class Usuario {
 	
 	private String ibge;
 	
+	private String fotoBase64;
+	
+	private String contentType;
+	
 	public Usuario() {
 		
 	}
@@ -58,7 +62,9 @@ public class Usuario {
 			       String bairro,
 			       String cidade,
 			       String uf,
-			       String ibge) {
+			       String ibge,
+			       String fotoBase64,
+			       String contentType) {
 		
 		this.id = id;
 		
@@ -81,6 +87,10 @@ public class Usuario {
 		this.uf = uf;
 		
 		this.ibge = ibge;
+		
+		this.fotoBase64 = fotoBase64;
+		
+		this.contentType = contentType;
 	}
 	
 	public Long getId() {
@@ -169,5 +179,21 @@ public class Usuario {
 
 	public void setIbge(String ibge) {
 		this.ibge = ibge;
+	}
+
+	public String getFotoBase64() {
+		return fotoBase64;
+	}
+
+	public void setFotoBase64(String fotoBase64) {
+		this.fotoBase64 = fotoBase64;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 }
