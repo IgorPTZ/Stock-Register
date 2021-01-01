@@ -28,6 +28,8 @@ public class Usuario {
 	
 	private String contentType;
 	
+	private String imagem;
+	
 	public Usuario() {
 		
 	}
@@ -195,5 +197,12 @@ public class Usuario {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	
+	public String getImagem() {
+		
+		imagem = "data:" + contentType + ";base64," + fotoBase64;
+		
+		return imagem;
 	}
 }

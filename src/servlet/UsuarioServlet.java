@@ -1,25 +1,26 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import beans.Usuario;
 import dao.DaoUsuario;
+import util.Utils;
 
 @WebServlet("/usuarioServlet")
+@MultipartConfig
 public class UsuarioServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -34,6 +35,8 @@ public class UsuarioServlet extends HttpServlet {
 	
 		String acao = request.getParameter("acao");	
 		
+		Long id = Long.parseLong(request.getParameter("id"));
+		
 		if(acao.equalsIgnoreCase("listall")) {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
@@ -44,8 +47,6 @@ public class UsuarioServlet extends HttpServlet {
 		}
 		else if(acao.equalsIgnoreCase("delete")) {
 			
-			Long id = Long.parseLong(request.getParameter("id"));
-			
 			daoUsuario.excluir(id);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
@@ -55,9 +56,7 @@ public class UsuarioServlet extends HttpServlet {
 			requestDispatcher.forward(request, response);
 		}
 		else if(acao.equalsIgnoreCase("put")) {
-			
-			Long id = Long.parseLong(request.getParameter("id"));
-			
+				
 			Usuario usuario = daoUsuario.consultar(id);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
@@ -65,6 +64,11 @@ public class UsuarioServlet extends HttpServlet {
 			request.setAttribute("usuario", usuario);
 			
 			requestDispatcher.forward(request, response);
+		}
+		else if(acao.equalsIgnoreCase("downloadImagem")) {
+						
+			Usuario usuario = daoUsuario.consultar(id);
+			
 		}
 	}
 
@@ -197,30 +201,31 @@ public class UsuarioServlet extends HttpServlet {
 	@SuppressWarnings("static-access")
 	private String[] obterImagemEnviada(HttpServletRequest request) throws FileUploadException {
 		
-		/* Inicio - Upload e arquivos */
-		
-		String[] informacoesDaImagem = new String[2];
-		
-		if(ServletFileUpload.isMultipartContent(request)) {
+		try {
+			/* Inicio - Upload e arquivos */
 			
-			List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+			String[] informacoesDaImagem = new String[2];
 			
-			for (FileItem fileItem : fileItems) {
+			if(ServletFileUpload.isMultipartContent(request)) {
 				
-				if(fileItem.getFieldName().equals("foto")) {
-					
-					informacoesDaImagem[0] = new Base64().encodeBase64String(fileItem.get());
-					
-					informacoesDaImagem[1] = fileItem.getContentType();
-					
-					System.out.println(informacoesDaImagem[0]);
-				}
+				Part imagem = request.getPart("foto");
 				
+				informacoesDaImagem[0] = new Base64()
+						                 .encodeBase64String(Utils
+						                		             .converterDeStreamParaByte(imagem.getInputStream()));
+				
+				informacoesDaImagem[1] = imagem.getContentType();
 			}
+			
+			/* Fim - Upload de arquivos */
+			
+			return informacoesDaImagem;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
 		}
 		
-		/* Fim - Upload de arquivos */
-		
-		return informacoesDaImagem;
+		return null;
 	}
 }

@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -143,6 +143,10 @@ public class DaoUsuario {
 			preparedStatement.setString(9, usuario.getUf());
 			
 			preparedStatement.setString(10, usuario.getIbge());
+			
+			preparedStatement.setString(11, usuario.getFotoBase64());
+			
+			preparedStatement.setString(12, usuario.getContentType());
 			
 			preparedStatement.execute();
 			
@@ -185,8 +189,8 @@ public class DaoUsuario {
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
-						                      null,
-						                      null);
+						                      resultSet.getString("imagem"),
+						                      resultSet.getString("tipo"));
 				 
 				return usuario;
 			}
@@ -224,8 +228,8 @@ public class DaoUsuario {
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
-						                      null,
-						                      null);
+						                      resultSet.getString("imagem"),
+						                      resultSet.getString("tipo"));
 				
 				usuarios.add(usuario);
 			}

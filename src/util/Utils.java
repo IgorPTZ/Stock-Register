@@ -1,5 +1,9 @@
 package util;
 
+import java.io.InputStream;
+
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
 public class Utils {
 	
 	@SuppressWarnings("unused")
@@ -19,5 +23,30 @@ public class Utils {
 		}
 		
 		return true;
+	}
+	
+	public static byte[] converterDeStreamParaByte(InputStream imagem) {
+		
+		try {
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			
+			int read = imagem.read();
+			
+			while(read != - 1) {
+				
+				outputStream.write(read);
+				read = imagem.read();
+			}
+			
+			outputStream.close();
+			
+			return outputStream.toByteArray();
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }
