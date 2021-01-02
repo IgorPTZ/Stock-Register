@@ -1,6 +1,9 @@
 package servlet;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,11 +34,12 @@ public class UsuarioServlet extends HttpServlet {
         super();
     }
 
+	@SuppressWarnings("static-access")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String acao = request.getParameter("acao");	
 		
-		Long id = Long.parseLong(request.getParameter("id"));
+		Long id = null;
+		
+		String acao = request.getParameter("acao");
 		
 		if(acao.equalsIgnoreCase("listall")) {
 			
@@ -47,6 +51,8 @@ public class UsuarioServlet extends HttpServlet {
 		}
 		else if(acao.equalsIgnoreCase("delete")) {
 			
+			id = Long.parseLong(request.getParameter("id"));
+			
 			daoUsuario.excluir(id);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
@@ -56,6 +62,8 @@ public class UsuarioServlet extends HttpServlet {
 			requestDispatcher.forward(request, response);
 		}
 		else if(acao.equalsIgnoreCase("put")) {
+			
+			id = Long.parseLong(request.getParameter("id"));
 				
 			Usuario usuario = daoUsuario.consultar(id);
 			
@@ -66,9 +74,38 @@ public class UsuarioServlet extends HttpServlet {
 			requestDispatcher.forward(request, response);
 		}
 		else if(acao.equalsIgnoreCase("downloadImagem")) {
-						
-			Usuario usuario = daoUsuario.consultar(id);
 			
+			id = Long.parseLong(request.getParameter("id"));
+						
+			Usuario usuario = daoUsuario.consultar(id);	
+			
+			if(usuario != null) {
+				
+				response.setHeader("Content-Disposition", "attachment;filename=arquivo." 
+				+ usuario.getContentType().split("\\/")[1]);
+				
+				/* Converte a imagem em base64 para um array de bytes*/
+				byte[] imagemEmBytes = new Base64().decodeBase64(usuario.getFotoBase64());
+				
+				/* Insere os bytes da imagem em um objeto de entrada para ser processado */
+				InputStream inputStream = new ByteArrayInputStream(imagemEmBytes);
+				
+				/* Inicio da resposta para o navegador */
+				int leitura = 0;
+				
+				byte[] bytes = new byte[1024];
+				
+				OutputStream outputStream = response.getOutputStream();
+				
+				while((leitura = inputStream.read(bytes)) != -1) {
+					
+					outputStream.write(bytes, 0, leitura);
+				}
+				
+				outputStream.flush();
+				
+				outputStream.close();
+			}
 		}
 	}
 
