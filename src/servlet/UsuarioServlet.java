@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -73,7 +72,9 @@ public class UsuarioServlet extends HttpServlet {
 			
 			requestDispatcher.forward(request, response);
 		}
-		else if(acao.equalsIgnoreCase("downloadImagem")) {
+		else if(acao.equalsIgnoreCase("download")) {
+			
+			String tipo = request.getParameter("tipo");
 			
 			id = Long.parseLong(request.getParameter("id"));
 						
@@ -81,14 +82,28 @@ public class UsuarioServlet extends HttpServlet {
 			
 			if(usuario != null) {
 				
-				response.setHeader("Content-Disposition", "attachment;filename=arquivo." 
-				+ usuario.getContentType().split("\\/")[1]);
+				byte[] arquivoEmBytes = null;
 				
-				/* Converte a imagem em base64 para um array de bytes*/
-				byte[] imagemEmBytes = new Base64().decodeBase64(usuario.getFotoBase64());
+				if(tipo.equalsIgnoreCase("foto")) {
+					
+					response.setHeader("Content-Disposition", "attachment;filename=arquivo." 
+							+ usuario.getContentTypeDaImagem().split("\\/")[1]);
+					
+					/* Converte a imagem em base64 para um array de bytes*/
+					arquivoEmBytes = new Base64().decodeBase64(usuario.getFotoBase64());
+				}
+				else if(tipo.equalsIgnoreCase("documento")) {
+					
+					response.setHeader("Content-Disposition", "attachment;filename=arquivo." 
+							+ usuario.getContentTypeDoDocumento().split("\\/")[1]);
+					
+					/* Converte a imagem em base64 para um array de bytes*/
+					arquivoEmBytes = new Base64().decodeBase64(usuario.getDocumentoBase64());
+				}
+				
 				
 				/* Insere os bytes da imagem em um objeto de entrada para ser processado */
-				InputStream inputStream = new ByteArrayInputStream(imagemEmBytes);
+				InputStream inputStream = new ByteArrayInputStream(arquivoEmBytes);
 				
 				/* Inicio da resposta para o navegador */
 				int leitura = 0;
@@ -128,7 +143,9 @@ public class UsuarioServlet extends HttpServlet {
 			}
 			else {
 					
-				String[] informacoesDaFoto = obterImagemEnviada(request);
+				String[] informacoesDaImagem = obterImagemEnviada(request);
+				
+				String[] informacoesDoDocumento = obterDocumentoEnviado(request);
 				
 				String id = request.getParameter("id");
 				
@@ -177,8 +194,10 @@ public class UsuarioServlet extends HttpServlet {
 						                      cidade,
 						                      uf,
 						                      ibge,
-						                      informacoesDaFoto[0],
-						                      informacoesDaFoto[1]);
+						                      informacoesDaImagem[0],
+						                      informacoesDaImagem[1],
+						                      informacoesDoDocumento[0],
+						                      informacoesDoDocumento[1]);
 				
 				if((id == null || id.isEmpty()) && 
 				   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
@@ -236,10 +255,10 @@ public class UsuarioServlet extends HttpServlet {
 	}
 	
 	@SuppressWarnings("static-access")
-	private String[] obterImagemEnviada(HttpServletRequest request) throws FileUploadException {
+	private String[] obterImagemEnviada(HttpServletRequest request) {
 		
 		try {
-			/* Inicio - Upload e arquivos */
+			/* Inicio - Upload de arquivos */
 			
 			String[] informacoesDaImagem = new String[2];
 			
@@ -247,16 +266,60 @@ public class UsuarioServlet extends HttpServlet {
 				
 				Part imagem = request.getPart("foto");
 				
-				informacoesDaImagem[0] = new Base64()
-						                 .encodeBase64String(Utils
-						                		             .converterDeStreamParaByte(imagem.getInputStream()));
+				if(imagem != null) {
 				
-				informacoesDaImagem[1] = imagem.getContentType();
+					informacoesDaImagem[0] = new Base64()
+							                 .encodeBase64String(Utils
+							                		             .converterDeStreamParaByte(imagem.getInputStream()));
+					
+					informacoesDaImagem[1] = imagem.getContentType();
+				}
+				else {
+					informacoesDaImagem[0] = null;
+					informacoesDaImagem[1] = null;
+				}
 			}
 			
 			/* Fim - Upload de arquivos */
 			
 			return informacoesDaImagem;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@SuppressWarnings("static-access")
+	private String[] obterDocumentoEnviado(HttpServletRequest request) {
+		
+		try {
+			/* Inicio - Upload de arquivos */
+			
+			String[] informacoesDoDocumento = new String[2];
+			
+			if(ServletFileUpload.isMultipartContent(request)) {
+				
+				Part documento = request.getPart("documento");
+				
+				if(documento != null) {
+					informacoesDoDocumento[0] = new Base64()
+							 .encodeBase64String(Utils
+									             .converterDeStreamParaByte(documento.getInputStream()));
+	
+					informacoesDoDocumento[1] = documento.getContentType();
+				}
+			}
+			else {
+				informacoesDoDocumento[0] = null;
+				informacoesDoDocumento[1] = null;
+			}
+			
+			/* Inicio - Upload de arquivos */
+			
+			return informacoesDoDocumento;
 		}
 		catch(Exception e) {
 			

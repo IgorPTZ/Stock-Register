@@ -26,32 +26,16 @@ public class Usuario {
 	
 	private String fotoBase64;
 	
-	private String contentType;
+	private String contentTypeDaImagem;
 	
 	private String imagem;
 	
+	private String documentoBase64;
+	
+	private String contentTypeDoDocumento;
+	
 	public Usuario() {
 		
-	}
-	
-	public Usuario(String login, String senha) {
-		
-		this.login = login;
-		
-		this.senha = senha;
-	}
-	
-	public Usuario (Long id, String login, String senha, String nome, String telefone) {
-		
-		this.id = id;
-		
-		this.login = login;
-		
-		this.senha = senha;
-		
-		this.nome = nome;
-		
-		this.telefone = telefone;
 	}
 	
 	public Usuario(Long id, 
@@ -66,7 +50,9 @@ public class Usuario {
 			       String uf,
 			       String ibge,
 			       String fotoBase64,
-			       String contentType) {
+			       String contentTypeDaImagem,
+			       String documentoBase64,
+			       String contentTypeDoDocumento) {
 		
 		this.id = id;
 		
@@ -92,7 +78,11 @@ public class Usuario {
 		
 		this.fotoBase64 = fotoBase64;
 		
-		this.contentType = contentType;
+		this.contentTypeDaImagem = contentTypeDaImagem;
+		
+		this.documentoBase64 = documentoBase64;
+		
+		this.contentTypeDoDocumento = contentTypeDoDocumento;
 	}
 	
 	public Long getId() {
@@ -191,17 +181,33 @@ public class Usuario {
 		this.fotoBase64 = fotoBase64;
 	}
 
-	public String getContentType() {
-		return contentType;
+	public String getContentTypeDaImagem() {
+		return contentTypeDaImagem;
 	}
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
+	public void setContentTypeDaImagem(String contentTypeDaImagem) {
+		this.contentTypeDaImagem = contentTypeDaImagem;
 	}
 	
+	public String getDocumentoBase64() {
+		return documentoBase64;
+	}
+
+	public void setDocumentoBase64(String documentoBase64) {
+		this.documentoBase64 = documentoBase64;
+	}
+
+	public String getContentTypeDoDocumento() {
+		return contentTypeDoDocumento;
+	}
+
+	public void setContentTypeDoDocumento(String contentTypeDoDocumento) {
+		this.contentTypeDoDocumento = contentTypeDoDocumento;
+	}
+
 	public String getImagem() {
 		
-		imagem = "data:" + contentType + ";base64," + fotoBase64;
+		imagem = "data:" + contentTypeDaImagem + ";base64," + fotoBase64;
 		
 		return imagem;
 	}

@@ -74,6 +74,11 @@
 					</tr>
 					
 					<tr>
+						<td>Documentos (PDF):</td>
+						<td><input type="file" name="documento"></td>
+					</tr>
+					
+					<tr>
 						<td></td>
 						<td><input type="submit" value="Salvar"> 
 						    <input type="submit" value="Cancelar" onclick="document.getElementById('formUsuario').action = 'usuarioServlet?acao=reset'"></td>
@@ -91,6 +96,7 @@
 				<th style="text-align:center;">Login</th>
 				<th style="text-align:center;">Nome</th>
 				<th style="text-align:center;">Imagem</th>
+				<th style="text-align:center;">Documento</th>
 				<th style="text-align:center;">Excluir</th>
 				<th style="text-align:center;">Editar</th>
 				<th style="text-align:center;">Telefones</th>
@@ -100,7 +106,8 @@
 					<td style="width: 150px"><c:out value="${usuario.id}"></c:out></td>
 					<td style="width: 150px"><c:out value="${usuario.login}"></c:out></td>
 					<td style="width: 200px"><c:out value="${usuario.nome}"></c:out></td>
-					<td><a href="usuarioServlet?acao=downloadImagem&id=${usuario.id}"><img src='<c:out value="${usuario.imagem}"></c:out>'  width="32px" height="32px"></a></td>
+					<td><a href="usuarioServlet?acao=download&tipo=foto&id=${usuario.id}"><img src='<c:out value="${usuario.imagem}"></c:out>'  width="32px" height="32px"></a></td>
+					<td><a href="usuarioServlet?acao=download&tipo=documento&id=${usuario.id}"><img src="resources/img/editar.png" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 					<td><a href="telefonesServlet?acao=addTelefone&usuarioId=${usuario.id}"><img src="resources/img/telefones.png" title="Telefones" width="20px" height="20px"></a></td>

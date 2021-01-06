@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -146,7 +146,11 @@ public class DaoUsuario {
 			
 			preparedStatement.setString(11, usuario.getFotoBase64());
 			
-			preparedStatement.setString(12, usuario.getContentType());
+			preparedStatement.setString(12, usuario.getContentTypeDaImagem());
+			
+			preparedStatement.setString(13, usuario.getDocumentoBase64());
+			
+			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
 			
 			preparedStatement.execute();
 			
@@ -190,7 +194,9 @@ public class DaoUsuario {
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
 						                      resultSet.getString("imagem"),
-						                      resultSet.getString("tipo"));
+						                      resultSet.getString("tipo_imagem"),
+						                      resultSet.getString("documento"),
+						                      resultSet.getString("tipo_documento"));
 				 
 				return usuario;
 			}
@@ -229,7 +235,9 @@ public class DaoUsuario {
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
 						                      resultSet.getString("imagem"),
-						                      resultSet.getString("tipo"));
+						                      resultSet.getString("tipo_imagem"),
+						                      resultSet.getString("documento"),
+						                      resultSet.getString("tipo_documento"));
 				
 				usuarios.add(usuario);
 			}

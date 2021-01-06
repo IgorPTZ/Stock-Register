@@ -25,17 +25,17 @@ public class Utils {
 		return true;
 	}
 	
-	public static byte[] converterDeStreamParaByte(InputStream imagem) {
+	public static byte[] converterDeStreamParaByte(InputStream arquivo) {
 		
 		try {
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			
-			int read = imagem.read();
+			int read = arquivo.read();
 			
 			while(read != - 1) {
 				
 				outputStream.write(read);
-				read = imagem.read();
+				read = arquivo.read();
 			}
 			
 			outputStream.close();
