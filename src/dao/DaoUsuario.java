@@ -256,7 +256,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ? where id = " + usuario.getId();
+			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, imagem = ?, tipo_imagem = ?, documento = ?, tipo_documento = ? where id = " + usuario.getId();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -279,6 +279,14 @@ public class DaoUsuario {
 			preparedStatement.setString(9, usuario.getUf());
 			
 			preparedStatement.setString(10, usuario.getIbge());
+			
+			preparedStatement.setString(11, usuario.getFotoBase64());
+			
+			preparedStatement.setString(12, usuario.getContentTypeDaImagem());
+			
+			preparedStatement.setString(13, usuario.getDocumentoBase64());
+			
+			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
 			
 			preparedStatement.executeUpdate();
 			
