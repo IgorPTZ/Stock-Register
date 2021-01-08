@@ -142,10 +142,6 @@ public class UsuarioServlet extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 			else {
-					
-				String[] informacoesDaImagem = obterImagemEnviada(request);
-				
-				String[] informacoesDoDocumento = obterDocumentoEnviado(request);
 				
 				String id = request.getParameter("id");
 				
@@ -170,6 +166,27 @@ public class UsuarioServlet extends HttpServlet {
 				String uf = request.getParameter("uf");
 				
 				String ibge = request.getParameter("ibge");
+				
+				String[] informacoesDaImagem = new String[2];
+				
+				String[] informacoesDoDocumento = new String[2];
+				
+				if(id != null && id.isEmpty() == false) {
+					
+					 informacoesDaImagem[0] = request.getParameter("fotoTemp");
+					 
+					 informacoesDaImagem[1] = request.getParameter("contentTypeDaImagemTemp");
+					
+					 informacoesDoDocumento[0] = request.getParameter("documentoTemp");
+					 
+					 informacoesDoDocumento[1] = request.getParameter("contentTypeDoDocumentoTemp");
+				}
+				else {
+					
+					 informacoesDaImagem = obterImagemEnviada(request);
+						
+					 informacoesDoDocumento = obterDocumentoEnviado(request);
+				}
 				
 				if(nome == null  || nome.isEmpty()  || 
 				   login == null || login.isEmpty() || 
