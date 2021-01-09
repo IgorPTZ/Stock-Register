@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Curso de JSP</title>
+	<title>Customer Registration</title>
 	<link rel="stylesheet" href="resources/css/estilo.css">
 </head>
 <body>
