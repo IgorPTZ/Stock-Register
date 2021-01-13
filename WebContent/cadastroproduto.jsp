@@ -6,6 +6,8 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Cadastro de produtos</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+		<script src="resources/javascript/jquery.maskMoney.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="resources/css/cadastro.css">
 	</head>
 	
@@ -38,7 +40,7 @@
 						
 						<tr>
 							<td>Valor:</td>
-							<td><input type="text" id="valor" name="valor" placeholder="Informe o valor" value="${produto.valor}" maxlength="12"></td>
+							<td><input type="text" id="valor" name="valor" placeholder="Informe o valor" value="${produto.valor}" maxlength="12" data-thousands="." data-decimal=","></td>
 						</tr>
 						
 						<tr>
@@ -99,4 +101,10 @@
 			}
 		</script>	
 	</body>
+			<script type="text/javascript">
+			
+				$(function() {
+					$('#valor').maskMoney();
+				});
+		</script>
 </html>
