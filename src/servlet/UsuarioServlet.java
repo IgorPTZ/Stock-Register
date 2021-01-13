@@ -141,7 +141,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				requestDispatcher.forward(request, response);
 			}
-			else {
+			else if(acao != null && acao.equalsIgnoreCase("save")){
 				
 				String id = request.getParameter("id");
 				
@@ -190,8 +190,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				if(nome == null  || nome.isEmpty()  || 
 				   login == null || login.isEmpty() || 
-				   senha == null || senha.isEmpty() ||
-				   telefone == null || telefone.isEmpty()) {
+				   senha == null || senha.isEmpty()) {
 					
 					validado = false;
 					

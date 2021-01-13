@@ -93,6 +93,8 @@ public class ProdutoServlet extends HttpServlet {
 			
 			String valor = request.getParameter("valor");
 			
+			valor = valor.replace(".","").replace(",", ".");
+			
 			Boolean valorEQuantidadeNaoSaoNumeros = Utils.isNumerico(quantidade) == false || 
 					                                Utils.isNumerico(valor) == false;
 			
@@ -134,7 +136,7 @@ public class ProdutoServlet extends HttpServlet {
 				produto = new Produto(produtoId,
 	                      nome,
 	                      Double.parseDouble(request.getParameter("quantidade")),
-	                      Double.parseDouble(request.getParameter("valor")));
+	                      Double.parseDouble(request.getParameter("valor").replace(".","").replace(",", ".")));
 			}
 			
 			Boolean ehUmaEdicao = id != null && id.isEmpty() == false;

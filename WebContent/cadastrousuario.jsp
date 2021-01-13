@@ -28,12 +28,12 @@
 						<td><input type="text" readonly="readonly" id="id" name="id" value="${usuario.id}"></td>
 						
 						<td>Cep:</td>
-						<td><input type="text" id="cep" name="cep" placeholder="Informe o cep" onblur="consultarCep();" value="${usuario.cep}"></td>
+						<td><input type="text" id="cep" name="cep" placeholder="Informe o cep" onblur="consultarCep();" value="${usuario.cep}" maxlength="8"></td>
 					<tr/>
 					
 					<tr>
 						<td>Nome:</td>
-						<td><input type="text" id="nome" name="nome" placeholder="Informe o nome completo" value="${usuario.nome}"></td>
+						<td><input type="text" id="nome" name="nome" placeholder="Informe o nome completo" value="${usuario.nome}" maxlength="50"></td>
 						
 						<td>Rua:</td>
 						<td><input type="text" id="rua" name="rua" placeholder="Informe a rua" value="${usuario.rua}"></td>
@@ -41,33 +41,28 @@
 									
 					<tr>
 						<td>Login:</td>
-						<td><input type="text" id="login" name="login" placeholder="Informe o login" value="${usuario.login}"></td>
+						<td><input type="text" id="login" name="login" placeholder="Informe o login" value="${usuario.login}" maxlength="15"></td>
 						
 						<td>Bairro:</td>
 						<td><input type="text" id="bairro" name="bairro" placeholder="Informe o bairro" value="${usuario.bairro}"></td>
 					</tr>
 					
-					<tr>
-						<td>Telefone:</td>
-						<td><input type="text" id="telefone" name="telefone" placeholder="Informe o telefone" value="${usuario.telefone}"></td>
-						
+					<tr>			
 						<td>Cidade:</td>
 						<td><input type="text" id="cidade" name="cidade" placeholder="Informe a cidade" value="${usuario.cidade}"></td>
+						
+						<td>Senha:</td>
+						<td><input type="password" id="senha" name="senha" placeholder="Informe a senha" value="${usuario.senha}" maxlength="30"></td>
 					</tr>
 					
-					<tr>
-						<td>Senha:</td>
-						<td><input type="password" id="senha" name="senha" placeholder="Informe a senha" value="${usuario.senha}"></td>
-						
+					<tr>	
 						<td>Estado:</td>
 						<td><input type="text" id="uf" name="uf" placeholder="Informe o estado" value="${usuario.uf}"></td>
-					</tr>
-								
-					<tr>
+						
 						<td>IBGE:</td>
 						<td><input type="text" id="ibge" name="ibge" placeholder="Informe o código IBGE" value="${usuario.ibge}"></td>
 					</tr>
-					
+										
 					<tr>
 						<td>Foto:</td>
 						<td><input type="file" name="foto">
@@ -84,7 +79,7 @@
 					
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Salvar"> 
+						<td><input type="submit" value="Salvar" onclick="document.getElementById('formUsuario').action = 'usuarioServlet?acao=save'"> 
 						    <input type="submit" value="Cancelar" onclick="document.getElementById('formUsuario').action = 'usuarioServlet?acao=reset'"></td>
 					</tr>
 				</table>
@@ -111,15 +106,22 @@
 					<td style="width: 150px"><c:out value="${usuario.login}"></c:out></td>
 					<td style="width: 200px"><c:out value="${usuario.nome}"></c:out></td>
 					
-					<c:if test="${usuario.fotoBase64.isEmpty() == false || usuario.fotoBase64 != null}">
+					<c:if test="${usuario.fotoBase64 != null && usuario.fotoBase64.isEmpty() == false}">
 						<td><a href="usuarioServlet?acao=download&tipo=foto&id=${usuario.id}"><img src='<c:out value="${usuario.imagem}"></c:out>'  width="32px" height="32px"></a></td>
 					</c:if>
 					
-					<c:if test="${usuario.fotoBase64.isEmpty() == true || usuario.fotoBase64 == null}">
-						<td><img src="resources/img/imagempadrao.png" width="20px" height="20px"></td>
+					<c:if test="${usuario.fotoBase64 == null || usuario.fotoBase64.isEmpty() == true}">
+						<td><img src="resources/img/imagempadrao.png" width="20px" height="20px" onclick="alert('O cliente não possuí foto')"></td>
 					</c:if>
 					
-					<td><a href="usuarioServlet?acao=download&tipo=documento&id=${usuario.id}"><img src="resources/img/download.png" width="20px" height="20px"></a></td>
+					<c:if test="${usuario.documentoBase64 != null && usuario.documentoBase64.isEmpty() == false}">
+						<td><a href="usuarioServlet?acao=download&tipo=documento&id=${usuario.id}"><img src="resources/img/download.png" width="20px" height="20px"></a></td>
+					</c:if>
+					
+					<c:if test="${usuario.documentoBase64 == null || usuario.documentoBase64.isEmpty() == true}">
+						<td><img src="resources/img/imagempadrao.png" width="20px" height="20px" onclick="alert('O cliente não possuí documento')"></td>
+					</c:if>
+					
 					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 					<td><a href="telefonesServlet?acao=addTelefone&usuarioId=${usuario.id}"><img src="resources/img/telefones.png" title="Telefones" width="20px" height="20px"></a></td>
@@ -130,6 +132,11 @@
 	
 	<script type="text/javascript">
 		function validarCamposDoFormulario() {
+					
+			if(document.getElementById("formUsuario").action == 'http://localhost:8080/app-jsp/usuarioServlet?acao=reset') {
+				
+				return true;
+			}
 			
 			if(document.getElementById("nome").value == '') {
 				
@@ -139,11 +146,6 @@
 			else if(document.getElementById("login").value == '') {
 				
 				alert('O campo login é obrigatório!');
-				return false;
-			}
-			else if(document.getElementById("telefone").value == '') {
-				
-				alert('O campo telefone é obrigatório!');
 				return false;
 			}
 			else if(document.getElementById("senha").value == '') {
