@@ -40,7 +40,7 @@ public class UsuarioServlet extends HttpServlet {
 		
 		String acao = request.getParameter("acao");
 		
-		if(acao.equalsIgnoreCase("listall")) {
+		if(acao.equalsIgnoreCase("listall") || acao == null) {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			
@@ -283,12 +283,18 @@ public class UsuarioServlet extends HttpServlet {
 				Part imagem = request.getPart("foto");
 				
 				if(imagem != null) {
+					
+					byte[] bytesDaImagem = Utils.converterDeStreamParaByte(imagem.getInputStream());
 				
 					informacoesDaImagem[0] = new Base64()
-							                 .encodeBase64String(Utils
-							                		             .converterDeStreamParaByte(imagem.getInputStream()));
+							                 .encodeBase64String(bytesDaImagem);
 					
 					informacoesDaImagem[1] = imagem.getContentType();
+					
+					/* Inicio - Criação de miniatura da imagem */
+					
+					
+					/* Fim - Criação de miniatura da imagem */
 				}
 				else {
 					informacoesDaImagem[0] = null;

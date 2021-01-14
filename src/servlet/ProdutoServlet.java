@@ -177,7 +177,7 @@ public class ProdutoServlet extends HttpServlet {
 					
 					daoProduto.atualizar(produto);
 					
-					mensagem += "Edição - O usuario foi atualizado com sucesso";
+					mensagem += "Edição - O produto foi atualizado com sucesso";
 					
 					request.setAttribute("mensagem", mensagem);
 				}
