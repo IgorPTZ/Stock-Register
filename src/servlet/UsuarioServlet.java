@@ -1,10 +1,14 @@
 package servlet;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -167,7 +172,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String ibge = request.getParameter("ibge");
 				
-				String[] informacoesDaImagem = new String[2];
+				String[] informacoesDaImagem = new String[3];
 				
 				String[] informacoesDoDocumento = new String[2];
 				
@@ -276,7 +281,7 @@ public class UsuarioServlet extends HttpServlet {
 		try {
 			/* Inicio - Upload de arquivos */
 			
-			String[] informacoesDaImagem = new String[2];
+			String[] informacoesDaImagem = new String[3];
 			
 			if(ServletFileUpload.isMultipartContent(request)) {
 				
@@ -293,12 +298,35 @@ public class UsuarioServlet extends HttpServlet {
 					
 					/* Inicio - Criação de miniatura da imagem */
 					
+					BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytesDaImagem));
+					
+					// Pega o tipo da imagem
+					int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+					
+					// Cria imagem em miniatura
+					BufferedImage resizedImage = new BufferedImage(100, 100, type);
+					
+					Graphics2D graphics2D = resizedImage.createGraphics();
+					
+					graphics2D.drawImage(resizedImage, 0, 0, 100, 100, null);
+					
+					// Passar miniaturar para o output
+					ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+					
+					ImageIO.write(resizedImage, "png", outputStream);
+					
+					String miniaturaDaImagemEmBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(outputStream.toByteArray());
+					
+					System.out.println(miniaturaDaImagemEmBase64);
+					
+					informacoesDaImagem[2] = miniaturaDaImagemEmBase64;
 					
 					/* Fim - Criação de miniatura da imagem */
 				}
 				else {
 					informacoesDaImagem[0] = null;
 					informacoesDaImagem[1] = null;
+					informacoesDaImagem[2] = null;
 				}
 			}
 			

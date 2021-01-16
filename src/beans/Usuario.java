@@ -26,6 +26,8 @@ public class Usuario {
 	
 	private String fotoBase64;
 	
+	private String miniaturaDaFotoBase64;
+	
 	private String contentTypeDaImagem;
 	
 	private String imagem;
@@ -179,6 +181,14 @@ public class Usuario {
 
 	public void setFotoBase64(String fotoBase64) {
 		this.fotoBase64 = fotoBase64;
+	}
+	
+	public String getMiniaturaDaFotoBase64() {
+		return miniaturaDaFotoBase64;
+	}
+
+	public void setMiniaturaDaFotoBase64(String miniaturaDaFotoBase64) {
+		this.miniaturaDaFotoBase64 = miniaturaDaFotoBase64;
 	}
 
 	public String getContentTypeDaImagem() {
