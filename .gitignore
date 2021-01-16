@@ -2,5 +2,4 @@
 build/
 .classpath
 .project
-WebContent/WEB-INF/lib
 .metadata/
