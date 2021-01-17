@@ -107,11 +107,11 @@
 					<td style="width: 150px"><c:out value="${usuario.login}"></c:out></td>
 					<td style="width: 200px"><c:out value="${usuario.nome}"></c:out></td>
 					
-					<c:if test="${usuario.fotoBase64 != null && usuario.fotoBase64.isEmpty() == false}">
-						<td><a href="usuarioServlet?acao=download&tipo=foto&id=${usuario.id}"><img src='<c:out value="${usuario.imagem}"></c:out>'  width="32px" height="32px"></a></td>
+					<c:if test="${usuario.miniaturaDafotoBase64 != null && usuario.miniaturaDaFotoBase64.isEmpty() == false}">
+						<td><a href="usuarioServlet?acao=download&tipo=foto&id=${usuario.id}"><img src='<c:out value="${usuario.miniaturaDaFotoBase64}"></c:out>'  width="32px" height="32px"></a></td>
 					</c:if>
 					
-					<c:if test="${usuario.fotoBase64 == null || usuario.fotoBase64.isEmpty() == true}">
+					<c:if test="${usuario.miniaturaDaFotoBase64 == null || usuario.miniaturaDaFotoBase64.isEmpty() == true}">
 						<td><img src="resources/img/imagempadrao.png" width="20px" height="20px" onclick="alert('O cliente não possuí foto')"></td>
 					</c:if>
 					

@@ -217,6 +217,7 @@ public class UsuarioServlet extends HttpServlet {
 						                      ibge,
 						                      informacoesDaImagem[0],
 						                      informacoesDaImagem[1],
+						                      informacoesDaImagem[2],
 						                      informacoesDoDocumento[0],
 						                      informacoesDoDocumento[1]);
 				
@@ -316,6 +317,8 @@ public class UsuarioServlet extends HttpServlet {
 					ImageIO.write(resizedImage, "png", outputStream);
 					
 					String miniaturaDaImagemEmBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(outputStream.toByteArray());
+					
+					System.out.println(informacoesDaImagem[0]);
 					
 					System.out.println(miniaturaDaImagemEmBase64);
 					

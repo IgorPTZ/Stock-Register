@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento, miniatura_imagem) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -151,6 +151,8 @@ public class DaoUsuario {
 			preparedStatement.setString(13, usuario.getDocumentoBase64());
 			
 			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
+			
+			preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
 			
 			preparedStatement.execute();
 			
@@ -195,6 +197,7 @@ public class DaoUsuario {
 						                      resultSet.getString("ibge"),
 						                      resultSet.getString("imagem"),
 						                      resultSet.getString("tipo_imagem"),
+						                      resultSet.getString("miniatura_imagem"),
 						                      resultSet.getString("documento"),
 						                      resultSet.getString("tipo_documento"));
 				 
@@ -234,8 +237,9 @@ public class DaoUsuario {
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
-						                      resultSet.getString("imagem"),
+						                      null, // A imagem sera apenas carregada na apos o click para download, evitando uma lista de contatos com imagem muito pesadas
 						                      resultSet.getString("tipo_imagem"),
+						                      resultSet.getString("miniatura_imagem"),
 						                      resultSet.getString("documento"),
 						                      resultSet.getString("tipo_documento"));
 				
@@ -256,7 +260,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, imagem = ?, tipo_imagem = ?, documento = ?, tipo_documento = ? where id = " + usuario.getId();
+			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, imagem = ?, tipo_imagem = ?, documento = ?, tipo_documento = ?, miniatura_imagem = ? where id = " + usuario.getId();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -287,6 +291,8 @@ public class DaoUsuario {
 			preparedStatement.setString(13, usuario.getDocumentoBase64());
 			
 			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
+			
+			preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
 			
 			preparedStatement.executeUpdate();
 			

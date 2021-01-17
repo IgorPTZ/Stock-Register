@@ -53,6 +53,7 @@ public class Usuario {
 			       String ibge,
 			       String fotoBase64,
 			       String contentTypeDaImagem,
+			       String miniaturaDaFotoBase64,
 			       String documentoBase64,
 			       String contentTypeDoDocumento) {
 		
@@ -85,6 +86,8 @@ public class Usuario {
 		this.documentoBase64 = documentoBase64;
 		
 		this.contentTypeDoDocumento = contentTypeDoDocumento;
+		
+		this.miniaturaDaFotoBase64 = miniaturaDaFotoBase64;
 	}
 	
 	public Long getId() {
