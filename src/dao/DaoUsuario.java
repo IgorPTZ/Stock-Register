@@ -176,7 +176,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "select * from usuario where id = " + id;
+			String sql = "select * from usuario where id = '" + id + "' and login <> 'admin'";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -218,7 +218,7 @@ public class DaoUsuario {
 			
 			List<Usuario> usuarios = new ArrayList<Usuario>();
 			
-			String sql = "select * from usuario";
+			String sql = "select * from usuario where login <> 'admin' order by nome";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -317,7 +317,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "delete from usuario where id = '" + id + "'";
+			String sql = "delete from usuario where id = '" + id + "' and login <> 'admin'";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			

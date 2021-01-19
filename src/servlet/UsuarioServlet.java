@@ -288,18 +288,19 @@ public class UsuarioServlet extends HttpServlet {
 				
 				Part imagem = request.getPart("foto");
 				
-				if(imagem != null) {
+				if(imagem != null && imagem.getSize() > 0) {
 					
-					byte[] bytesDaImagem = Utils.converterDeStreamParaByte(imagem.getInputStream());
-				
 					informacoesDaImagem[0] = new Base64()
-							                 .encodeBase64String(bytesDaImagem);
+							                 .encodeBase64String(Utils.converterDeStreamParaByte(imagem.getInputStream()));
 					
 					informacoesDaImagem[1] = imagem.getContentType();
 					
-					/* Inicio - Criação de miniatura da imagem */
+					/* Inicio - Criação de miniatura da imagem (Miniatura utilizada na listagem de clientes, evitando carregar a imagem original na lista, pois a mesma é muito pesada)*/
 					
-					BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytesDaImagem));
+					// Transformar base64 em imagem (decode)
+					byte[] bytesDaImagemDecodificados = new Base64().decodeBase64(informacoesDaImagem[0]);
+					
+					BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytesDaImagemDecodificados));
 					
 					// Pega o tipo da imagem
 					int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
@@ -309,7 +310,9 @@ public class UsuarioServlet extends HttpServlet {
 					
 					Graphics2D graphics2D = resizedImage.createGraphics();
 					
-					graphics2D.drawImage(resizedImage, 0, 0, 100, 100, null);
+					graphics2D.drawImage(bufferedImage, 0, 0, 100, 100, null);
+					
+					graphics2D.dispose();
 					
 					// Passar miniaturar para o output
 					ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -317,10 +320,6 @@ public class UsuarioServlet extends HttpServlet {
 					ImageIO.write(resizedImage, "png", outputStream);
 					
 					String miniaturaDaImagemEmBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(outputStream.toByteArray());
-					
-					System.out.println(informacoesDaImagem[0]);
-					
-					System.out.println(miniaturaDaImagemEmBase64);
 					
 					informacoesDaImagem[2] = miniaturaDaImagemEmBase64;
 					
@@ -357,7 +356,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 				Part documento = request.getPart("documento");
 				
-				if(documento != null) {
+				if(documento != null && documento.getSize() > 0) {
 					informacoesDoDocumento[0] = new Base64()
 							 .encodeBase64String(Utils
 									             .converterDeStreamParaByte(documento.getInputStream()));
