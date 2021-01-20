@@ -45,7 +45,7 @@ public class UsuarioServlet extends HttpServlet {
 		
 		String acao = request.getParameter("acao");
 		
-		if(acao.equalsIgnoreCase("listall") || acao == null) {
+		if( acao == null || acao.equalsIgnoreCase("listall")) {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			

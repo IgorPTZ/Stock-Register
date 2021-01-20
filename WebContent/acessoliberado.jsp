@@ -1,6 +1,8 @@
 <html>
 	<center><h2>Cadastro de clientes e produtos</h2></center>
-
+	
+	<center><a href="index.jsp">Sair</a></center>
+	
 	<br/>
 	<br/>
 	<br/>

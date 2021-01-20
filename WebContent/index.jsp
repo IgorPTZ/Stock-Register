@@ -7,11 +7,12 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Customer Registration</title>
+	<title>Cadastro de clientes e produtos</title>
 	<link rel="stylesheet" href="resources/css/estilo.css">
 </head>
 <body>
 	<div class="login-page">
+		<center><h4>Cadastro de clientes e produtos</h4></center>
 		<div class="form">
 			<form action="loginServlet" method="post" class="login-form">
 				Login:
