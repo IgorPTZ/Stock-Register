@@ -176,22 +176,9 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String[] informacoesDoDocumento = new String[2];
 				
-				if(id != null && id.isEmpty() == false) {
+				informacoesDaImagem = obterImagemEnviada(request);
 					
-					 informacoesDaImagem[0] = request.getParameter("fotoTemp");
-					 
-					 informacoesDaImagem[1] = request.getParameter("contentTypeDaImagemTemp");
-					
-					 informacoesDoDocumento[0] = request.getParameter("documentoTemp");
-					 
-					 informacoesDoDocumento[1] = request.getParameter("contentTypeDoDocumentoTemp");
-				}
-				else {
-					
-					 informacoesDaImagem = obterImagemEnviada(request);
-						
-					 informacoesDoDocumento = obterDocumentoEnviado(request);
-				}
+				informacoesDoDocumento = obterDocumentoEnviado(request);
 				
 				if(nome == null  || nome.isEmpty()  || 
 				   login == null || login.isEmpty() || 
@@ -221,6 +208,16 @@ public class UsuarioServlet extends HttpServlet {
 						                      informacoesDoDocumento[0],
 						                      informacoesDoDocumento[1]);
 				
+				if(informacoesDaImagem[0] != null && informacoesDaImagem[1] != null) {
+					
+					usuario.setAtualizacaoDeImagem(true);
+				}
+				
+				if(informacoesDoDocumento[0] != null && informacoesDoDocumento[1] != null) {
+					
+					usuario.setAtualizacaoDeDocumento(true);
+				}
+					
 				if((id == null || id.isEmpty()) && 
 				   (!daoUsuario.isLoginUsuarioNovoValido(login) || !daoUsuario.isSenhaDeUsuarioNovoValida(senha)) && 
 				   validado == true) {
@@ -331,6 +328,11 @@ public class UsuarioServlet extends HttpServlet {
 					informacoesDaImagem[2] = null;
 				}
 			}
+			else {
+				informacoesDaImagem[0] = null;
+				informacoesDaImagem[1] = null;
+				informacoesDaImagem[2] = null;
+			}
 			
 			/* Fim - Upload de arquivos */
 			
@@ -362,6 +364,10 @@ public class UsuarioServlet extends HttpServlet {
 									             .converterDeStreamParaByte(documento.getInputStream()));
 	
 					informacoesDoDocumento[1] = documento.getContentType();
+				}
+				else {
+					informacoesDoDocumento[0] = null;
+					informacoesDoDocumento[1] = null;
 				}
 			}
 			else {

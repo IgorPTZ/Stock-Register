@@ -67,15 +67,11 @@
 					<tr>
 						<td>Foto:</td>
 						<td><input type="file" name="foto">
-						    <input type="hidden" name="fotoTemp" readonly="readonly" value="${usuario.fotoBase64}">
-						    <input type="hidden" name="contentTypeDaImagemTemp"  value="${usuario.contentTypeDaImagem}"></td>
 					</tr>
 					
 					<tr>
 						<td>Documentos (PDF):</td>
 						<td><input type="file" name="documento" value="${usuario.documentoBase64}">
-						    <input type="hidden" name="documentoTemp" value="${usuario.documentoBase64}">
-						    <input type="hidden" name="contentTypeDoDocumentoTemp" value="${usuario.contentTypeDoDocumento}"></td>
 					</tr>
 					
 					<tr>

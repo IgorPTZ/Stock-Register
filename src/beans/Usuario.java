@@ -36,6 +36,10 @@ public class Usuario {
 	
 	private String contentTypeDoDocumento;
 	
+	private Boolean atualizacaoDeImagem = false;
+	
+	private Boolean atualizacaoDeDocumento = false;
+	
 	public Usuario() {
 		
 	}
@@ -216,6 +220,22 @@ public class Usuario {
 
 	public void setContentTypeDoDocumento(String contentTypeDoDocumento) {
 		this.contentTypeDoDocumento = contentTypeDoDocumento;
+	}
+	
+	public Boolean getAtualizacaoDeImagem() {
+		return atualizacaoDeImagem;
+	}
+
+	public void setAtualizacaoDeImagem(Boolean atualizacaoDeImagem) {
+		this.atualizacaoDeImagem = atualizacaoDeImagem;
+	}
+
+	public Boolean getAtualizacaoDeDocumento() {
+		return atualizacaoDeDocumento;
+	}
+
+	public void setAtualizacaoDeDocumento(Boolean atualizacaoDeDocumento) {
+		this.atualizacaoDeDocumento = atualizacaoDeDocumento;
 	}
 
 	public String getImagem() {

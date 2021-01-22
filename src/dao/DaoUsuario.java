@@ -259,10 +259,26 @@ public class DaoUsuario {
 	public void atualizar(Usuario usuario) {
 		
 		try {
+			StringBuilder sql = new StringBuilder();
 			
-			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, imagem = ?, tipo_imagem = ?, documento = ?, tipo_documento = ?, miniatura_imagem = ? where id = " + usuario.getId();
+			sql.append("update usuario set login = ?, senha = ?, nome = ?, telefone = ?,");
 			
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			sql.append("cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?,");
+			
+			if(usuario.getAtualizacaoDeImagem()) {
+				
+				sql.append(" imagem = ?, tipo_imagem = ?, miniatura_imagem = ? ");
+			}
+			
+			
+			if(usuario.getAtualizacaoDeDocumento()) {
+				
+				sql.append(", documento = ?, tipo_documento = ? ");
+			}
+			 
+			sql.append("where id = " + usuario.getId());   
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
 			
 			preparedStatement.setString(1, usuario.getLogin());
 			
@@ -284,16 +300,23 @@ public class DaoUsuario {
 			
 			preparedStatement.setString(10, usuario.getIbge());
 			
-			preparedStatement.setString(11, usuario.getFotoBase64());
 			
-			preparedStatement.setString(12, usuario.getContentTypeDaImagem());
-			
-			preparedStatement.setString(13, usuario.getDocumentoBase64());
-			
-			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
-			
-			preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
-			
+			if(usuario.getAtualizacaoDeImagem()) {
+				
+				preparedStatement.setString(11, usuario.getFotoBase64());
+				
+				preparedStatement.setString(12, usuario.getContentTypeDaImagem());
+				
+				preparedStatement.setString(13, usuario.getMiniaturaDaFotoBase64());
+			}
+
+			if(usuario.getAtualizacaoDeDocumento()) {
+				
+				preparedStatement.setString(14, usuario.getDocumentoBase64());
+				
+				preparedStatement.setString(15, usuario.getContentTypeDoDocumento());
+			}
+
 			preparedStatement.executeUpdate();
 			
 			connection.commit();
