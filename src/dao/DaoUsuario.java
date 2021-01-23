@@ -261,22 +261,22 @@ public class DaoUsuario {
 		try {
 			StringBuilder sql = new StringBuilder();
 			
-			sql.append("update usuario set login = ?, senha = ?, nome = ?, telefone = ?,");
+			sql.append(" update usuario set login = ?, senha = ?, nome = ?, telefone = ?,");
 			
-			sql.append("cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?,");
+			sql.append(" cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ? ");
 			
 			if(usuario.getAtualizacaoDeImagem()) {
 				
-				sql.append(" imagem = ?, tipo_imagem = ?, miniatura_imagem = ? ");
+				sql.append(" , imagem = ?, tipo_imagem = ?, miniatura_imagem = ? ");
 			}
 			
 			
 			if(usuario.getAtualizacaoDeDocumento()) {
 				
-				sql.append(", documento = ?, tipo_documento = ? ");
+				sql.append(" , documento = ?,  tipo_documento = ? ");
 			}
 			 
-			sql.append("where id = " + usuario.getId());   
+			sql.append(" where id = " + usuario.getId());   
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
 			
@@ -300,8 +300,19 @@ public class DaoUsuario {
 			
 			preparedStatement.setString(10, usuario.getIbge());
 			
-			
-			if(usuario.getAtualizacaoDeImagem()) {
+			if(usuario.getAtualizacaoDeImagem() && usuario.getAtualizacaoDeDocumento()) {
+				
+				preparedStatement.setString(11, usuario.getFotoBase64());
+				
+				preparedStatement.setString(12, usuario.getContentTypeDaImagem());
+				
+				preparedStatement.setString(13, usuario.getMiniaturaDaFotoBase64());
+				
+				preparedStatement.setString(14, usuario.getDocumentoBase64());
+				 
+				preparedStatement.setString(15, usuario.getContentTypeDoDocumento());
+			}
+			else if(usuario.getAtualizacaoDeImagem() && !usuario.getAtualizacaoDeDocumento()) {
 				
 				preparedStatement.setString(11, usuario.getFotoBase64());
 				
@@ -309,12 +320,11 @@ public class DaoUsuario {
 				
 				preparedStatement.setString(13, usuario.getMiniaturaDaFotoBase64());
 			}
-
-			if(usuario.getAtualizacaoDeDocumento()) {
+			else if(usuario.getAtualizacaoDeDocumento() && !usuario.getAtualizacaoDeImagem()) {
 				
-				preparedStatement.setString(14, usuario.getDocumentoBase64());
-				
-				preparedStatement.setString(15, usuario.getContentTypeDoDocumento());
+				preparedStatement.setString(11, usuario.getDocumentoBase64());
+				 
+				preparedStatement.setString(12, usuario.getContentTypeDoDocumento());
 			}
 
 			preparedStatement.executeUpdate();
