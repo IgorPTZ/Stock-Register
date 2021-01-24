@@ -30,39 +30,52 @@ public class TelefonesServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getParameter("acao").equals("addTelefone")) {
+		String acao = request.getParameter("acao");
+		
+		String usuarioId = request.getParameter("usuarioId");
+		
+		if(acao != null && usuarioId != null) {
 			
-			String usuarioId = request.getParameter("usuarioId");
-			
-			Usuario usuario = daoUsuario.consultar(Long.parseLong(usuarioId));
-			
-			request.getSession().setAttribute("usuarioSelecionado", usuario);
-			
-			request.setAttribute("usuarioSelecionado", usuario);
-			
-			request.setAttribute("telefones", daoTelefone.listar(usuario.getId()));
-			
-			RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
-			
-			view.forward(request, response);
+			if(acao.equals("addTelefone")) {
+				
+				Usuario usuario = daoUsuario.consultar(Long.parseLong(usuarioId));
+				
+				request.getSession().setAttribute("usuarioSelecionado", usuario);
+				
+				request.setAttribute("usuarioSelecionado", usuario);
+				
+				request.setAttribute("telefones", daoTelefone.listar(usuario.getId()));
+				
+				RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
+				
+				view.forward(request, response);
+			}
+			else if(acao.equals("delete")) {
+				
+				String telefoneId = request.getParameter("id");
+				
+				daoTelefone.excluir(Long.parseLong(telefoneId));
+				
+				Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioSelecionado");
+				
+				request.setAttribute("mensagem", "Telefone excluído com sucesso!");
+				
+				request.setAttribute("telefones", daoTelefone.listar(usuario.getId()));
+				
+				RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
+				
+				view.forward(request, response);
+			}
 		}
-		else if(request.getParameter("acao").equals("delete")) {
+		else {
+			request.setAttribute("mensagem", "O usuario associado ao telefone nao foi encontrado. Por favor, selecione o usuário novamente.");
 			
-			String telefoneId = request.getParameter("id");
+			request.setAttribute("usuarios", daoUsuario.listar());
 			
-			daoTelefone.excluir(Long.parseLong(telefoneId));
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/cadastrousuario.jsp");
 			
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioSelecionado");
-			
-			request.setAttribute("mensagem", "Telefone excluído com sucesso!");
-			
-			request.setAttribute("telefones", daoTelefone.listar(usuario.getId()));
-			
-			RequestDispatcher view = request.getRequestDispatcher("/cadastrotelefones.jsp");
-			
-			view.forward(request, response);
+			requestDispatcher.forward(request, response);
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
