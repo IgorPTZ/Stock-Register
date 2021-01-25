@@ -36,12 +36,12 @@
 						
 						<tr>
 							<td>Quantidade:</td>
-							<td><input type="number" id="quantidade" name="quantidade" placeholder="Informe a quantidade" value="${produto.quantidade}"></td>
+							<td><input type="text" id="quantidade" name="quantidade" placeholder="Informe a quantidade" maxlength="6" value="${produto.quantidade}"></td>
 						</tr>
 						
 						<tr>
 							<td>Valor:</td>
-							<td><input type="text" id="valor" name="valor" placeholder="Informe o valor" value="${produto.valorEmTexto}" maxlength="12" data-thousands="." data-decimal=","></td>
+							<td><input type="text" id="valor" name="valor" placeholder="Informe o valor" value="${produto.valorEmTexto}" maxlength="9" data-thousands="." data-decimal=","></td>
 						</tr>
 						
 						<tr>
@@ -106,6 +106,12 @@
 			
 				$(function() {
 					$('#valor').maskMoney();
+				});
+				
+				$(document).ready(function(){
+					$("#quantidade").keyup(function(){
+						$("#quantidade").val(this.value.match(/[0-9]*/));
+					});
 				});
 		</script>
 </html>
