@@ -36,6 +36,8 @@ public class Usuario {
 	
 	private String contentTypeDoDocumento;
 	
+	private Boolean ativo;
+	
 	private Boolean atualizacaoDeImagem = false;
 	
 	private Boolean atualizacaoDeDocumento = false;
@@ -59,7 +61,8 @@ public class Usuario {
 			       String contentTypeDaImagem,
 			       String miniaturaDaFotoBase64,
 			       String documentoBase64,
-			       String contentTypeDoDocumento) {
+			       String contentTypeDoDocumento,
+			       Boolean ativo) {
 		
 		this.id = id;
 		
@@ -92,6 +95,8 @@ public class Usuario {
 		this.contentTypeDoDocumento = contentTypeDoDocumento;
 		
 		this.miniaturaDaFotoBase64 = miniaturaDaFotoBase64;
+		
+		this.ativo = ativo;
 	}
 	
 	public Long getId() {
@@ -222,6 +227,26 @@ public class Usuario {
 		this.contentTypeDoDocumento = contentTypeDoDocumento;
 	}
 	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	public void setAtivo(String ativo) {
+		
+		if(ativo == null) {
+			
+			this.ativo = false;
+		}
+		else if(ativo.equalsIgnoreCase("on")) {
+			
+			this.ativo = true;
+		}
+	}
+
 	public Boolean getAtualizacaoDeImagem() {
 		return atualizacaoDeImagem;
 	}

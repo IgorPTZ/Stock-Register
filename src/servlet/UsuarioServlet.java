@@ -176,9 +176,13 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String[] informacoesDoDocumento = new String[2];
 				
+				String ativo = request.getParameter("ativo");
+				
 				informacoesDaImagem = obterImagemEnviada(request);
 					
 				informacoesDoDocumento = obterDocumentoEnviado(request);
+				
+				Usuario usuario = null;
 				
 				if(nome == null  || nome.isEmpty()  || 
 				   login == null || login.isEmpty() || 
@@ -191,22 +195,47 @@ public class UsuarioServlet extends HttpServlet {
 					request.setAttribute("mensagem", mensagem);
 				}
 				
-				Usuario usuario = new Usuario(usuarioId, 
-						                      login, 
-						                      senha, 
-						                      nome, 
-						                      telefone,
-						                      cep,
-						                      rua,
-						                      bairro,
-						                      cidade,
-						                      uf,
-						                      ibge,
-						                      informacoesDaImagem[0],
-						                      informacoesDaImagem[1],
-						                      informacoesDaImagem[2],
-						                      informacoesDoDocumento[0],
-						                      informacoesDoDocumento[1]);
+				if(ativo == null) {
+					
+					 usuario = new Usuario(usuarioId, 
+		                      login, 
+		                      senha, 
+		                      nome, 
+		                      telefone,
+		                      cep,
+		                      rua,
+		                      bairro,
+		                      cidade,
+		                      uf,
+		                      ibge,
+		                      informacoesDaImagem[0],
+		                      informacoesDaImagem[1],
+		                      informacoesDaImagem[2],
+		                      informacoesDoDocumento[0],
+		                      informacoesDoDocumento[1],
+		                      false);
+				}
+				else if(ativo.equalsIgnoreCase("on")) {
+					
+					 usuario = new Usuario(usuarioId, 
+		                      login, 
+		                      senha, 
+		                      nome, 
+		                      telefone,
+		                      cep,
+		                      rua,
+		                      bairro,
+		                      cidade,
+		                      uf,
+		                      ibge,
+		                      informacoesDaImagem[0],
+		                      informacoesDaImagem[1],
+		                      informacoesDaImagem[2],
+		                      informacoesDoDocumento[0],
+		                      informacoesDoDocumento[1],
+		                      true);
+				}
+
 				
 				if(informacoesDaImagem[0] != null && informacoesDaImagem[1] != null) {
 					

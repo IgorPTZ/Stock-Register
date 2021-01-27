@@ -63,6 +63,11 @@
 						<td>IBGE:</td>
 						<td><input type="text" id="ibge" name="ibge" placeholder="Informe o código IBGE" value="${usuario.ibge}"></td>
 					</tr>
+					
+					<tr>
+						<td>Ativo:</td>
+						<td><input type="checkbox" id="ativo" name="ativo"></td>
+					</tr>
 										
 					<tr>
 						<td>Foto:</td>
@@ -119,7 +124,7 @@
 						<td><img src="resources/img/imagempadrao.png" width="20px" height="20px" onclick="alert('O cliente não possuí documento')"></td>
 					</c:if>
 					
-					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
+					<td><a href="usuarioServlet?acao=delete&id=${usuario.id}" onclick="return confirm('Deseja excluir esse cliente ?');"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 					<td><a href="usuarioServlet?acao=put&id=${usuario.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 					<td><a href="telefonesServlet?acao=addTelefone&usuarioId=${usuario.id}"><img src="resources/img/telefones.png" title="Telefones" width="20px" height="20px"></a></td>
 				</tr>

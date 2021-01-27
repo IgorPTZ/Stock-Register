@@ -71,7 +71,7 @@
 						<td style="width: 150px"><c:out value="${produto.nome}"></c:out></td>
 						<td style="width: 150px"><c:out value="${produto.quantidade}"></c:out></td>
 						<td style="width: 150px"><fmt:formatNumber type="number" maxFractionDigits="2" value="${produto.valor}" /></td>
-						<td><a href="produtoServlet?acao=delete&id=${produto.id}"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
+						<td><a href="produtoServlet?acao=delete&id=${produto.id}" onclick="return confirm('Deseja excluir esse produto ?');"><img src="resources/img/excluir.png" title="Excluir" width="20px" height="20px"></a></td>
 						<td><a href="produtoServlet?acao=put&id=${produto.id}"><img src="resources/img/editar.png" title="Editar" width="20px" height="20px"></a></td>
 					</tr>
 				</c:forEach>
