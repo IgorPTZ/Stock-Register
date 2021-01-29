@@ -36,6 +36,8 @@ public class Usuario {
 	
 	private String contentTypeDoDocumento;
 	
+	private String sexo;
+	
 	private Boolean ativo;
 	
 	private Boolean atualizacaoDeImagem = false;
@@ -62,7 +64,8 @@ public class Usuario {
 			       String miniaturaDaFotoBase64,
 			       String documentoBase64,
 			       String contentTypeDoDocumento,
-			       Boolean ativo) {
+			       Boolean ativo,
+			       String sexo) {
 		
 		this.id = id;
 		
@@ -97,6 +100,8 @@ public class Usuario {
 		this.miniaturaDaFotoBase64 = miniaturaDaFotoBase64;
 		
 		this.ativo = ativo;
+		
+		this.sexo = sexo;
 	}
 	
 	public Long getId() {
@@ -227,6 +232,14 @@ public class Usuario {
 		this.contentTypeDoDocumento = contentTypeDoDocumento;
 	}
 	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
 	public Boolean getAtivo() {
 		return ativo;
 	}
@@ -235,18 +248,6 @@ public class Usuario {
 		this.ativo = ativo;
 	}
 	
-	public void setAtivo(String ativo) {
-		
-		if(ativo == null) {
-			
-			this.ativo = false;
-		}
-		else if(ativo.equalsIgnoreCase("on")) {
-			
-			this.ativo = true;
-		}
-	}
-
 	public Boolean getAtualizacaoDeImagem() {
 		return atualizacaoDeImagem;
 	}

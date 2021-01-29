@@ -178,6 +178,8 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String ativo = request.getParameter("ativo");
 				
+				String sexo = request.getParameter("sexo");
+				
 				informacoesDaImagem = obterImagemEnviada(request);
 					
 				informacoesDoDocumento = obterDocumentoEnviado(request);
@@ -213,7 +215,8 @@ public class UsuarioServlet extends HttpServlet {
 		                      informacoesDaImagem[2],
 		                      informacoesDoDocumento[0],
 		                      informacoesDoDocumento[1],
-		                      false);
+		                      false,
+		                      sexo);
 				}
 				else if(ativo.equalsIgnoreCase("on")) {
 					
@@ -233,7 +236,8 @@ public class UsuarioServlet extends HttpServlet {
 		                      informacoesDaImagem[2],
 		                      informacoesDoDocumento[0],
 		                      informacoesDoDocumento[1],
-		                      true);
+		                      true,
+		                      sexo);
 				}
 
 				
