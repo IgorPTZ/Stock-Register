@@ -132,6 +132,7 @@ public class UsuarioServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
+			
 			String acao = request.getParameter("acao");
 			
 			String mensagem = "";
@@ -172,13 +173,15 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String ibge = request.getParameter("ibge");
 				
-				String[] informacoesDaImagem = new String[3];
-				
-				String[] informacoesDoDocumento = new String[2];
-				
 				String ativo = request.getParameter("ativo");
 				
 				String sexo = request.getParameter("sexo");
+				
+				String perfilDeConsumo = request.getParameter("perfilConsumo");
+				
+				String[] informacoesDaImagem = new String[3];
+				
+				String[] informacoesDoDocumento = new String[2];
 				
 				informacoesDaImagem = obterImagemEnviada(request);
 					
@@ -216,7 +219,8 @@ public class UsuarioServlet extends HttpServlet {
 		                      informacoesDoDocumento[0],
 		                      informacoesDoDocumento[1],
 		                      false,
-		                      sexo);
+		                      sexo,
+		                      perfilDeConsumo);
 				}
 				else if(ativo.equalsIgnoreCase("on")) {
 					
@@ -237,7 +241,8 @@ public class UsuarioServlet extends HttpServlet {
 		                      informacoesDoDocumento[0],
 		                      informacoesDoDocumento[1],
 		                      true,
-		                      sexo);
+		                      sexo,
+		                      perfilDeConsumo);
 				}
 
 				

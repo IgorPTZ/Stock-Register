@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento, miniatura_imagem, ativo, sexo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento, miniatura_imagem, ativo, sexo, perfil_consumo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -157,6 +157,8 @@ public class DaoUsuario {
 			preparedStatement.setBoolean(16, usuario.getAtivo());
 			
 			preparedStatement.setString(17, usuario.getSexo());
+			
+			preparedStatement.setString(18, usuario.getPerfilDeConsumo());
 			
 			preparedStatement.execute();
 			
@@ -205,7 +207,8 @@ public class DaoUsuario {
 						                      resultSet.getString("documento"),
 						                      resultSet.getString("tipo_documento"),
 						                      resultSet.getBoolean("ativo"),
-						                      resultSet.getString("sexo"));
+						                      resultSet.getString("sexo"),
+						                      resultSet.getString("perfil_consumo"));
 				 
 				return usuario;
 			}
@@ -249,7 +252,8 @@ public class DaoUsuario {
 						                      resultSet.getString("documento"),
 						                      resultSet.getString("tipo_documento"),
 						                      resultSet.getBoolean("ativo"),
-						                      resultSet.getString("sexo"));
+						                      resultSet.getString("sexo"),
+						                      resultSet.getString("perfil_consumo"));
 				
 				usuarios.add(usuario);
 			}
@@ -271,7 +275,7 @@ public class DaoUsuario {
 			
 			sql.append(" update usuario set login = ?, senha = ?, nome = ?, telefone = ?,");
 			
-			sql.append(" cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, ativo = ?, sexo = ? ");
+			sql.append(" cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, ativo = ?, sexo = ?, perfil_consumo = ? ");
 			
 			if(usuario.getAtualizacaoDeImagem()) {
 				
@@ -312,31 +316,33 @@ public class DaoUsuario {
 			
 			preparedStatement.setString(12, usuario.getSexo());
 			
+			preparedStatement.setString(13, usuario.getPerfilDeConsumo());
+			
 			if(usuario.getAtualizacaoDeImagem() && usuario.getAtualizacaoDeDocumento()) {
 				
-				preparedStatement.setString(13, usuario.getFotoBase64());
+				preparedStatement.setString(14, usuario.getFotoBase64());
 				
-				preparedStatement.setString(14, usuario.getContentTypeDaImagem());
+				preparedStatement.setString(15, usuario.getContentTypeDaImagem());
 				
-				preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
+				preparedStatement.setString(16, usuario.getMiniaturaDaFotoBase64());
 				
-				preparedStatement.setString(16, usuario.getDocumentoBase64());
+				preparedStatement.setString(17, usuario.getDocumentoBase64());
 				 
-				preparedStatement.setString(17, usuario.getContentTypeDoDocumento());
+				preparedStatement.setString(18, usuario.getContentTypeDoDocumento());
 			}
 			else if(usuario.getAtualizacaoDeImagem() && !usuario.getAtualizacaoDeDocumento()) {
 				
-				preparedStatement.setString(13, usuario.getFotoBase64());
+				preparedStatement.setString(14, usuario.getFotoBase64());
 				
-				preparedStatement.setString(14, usuario.getContentTypeDaImagem());
+				preparedStatement.setString(15, usuario.getContentTypeDaImagem());
 				
-				preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
+				preparedStatement.setString(16, usuario.getMiniaturaDaFotoBase64());
 			}
 			else if(usuario.getAtualizacaoDeDocumento() && !usuario.getAtualizacaoDeImagem()) {
 				
-				preparedStatement.setString(13, usuario.getDocumentoBase64());
+				preparedStatement.setString(14, usuario.getDocumentoBase64());
 				 
-				preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
+				preparedStatement.setString(15, usuario.getContentTypeDoDocumento());
 			}
 
 			preparedStatement.executeUpdate();

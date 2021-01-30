@@ -124,6 +124,18 @@
 								%>
 							value="Feminino">Feminino</input></td>
 					</tr>
+					
+					<tr>
+						<td>Perfil de consumo:</td>
+						<td>
+							<select id="perfilConsumo" name="perfilConsumo" style="width: 170px;">
+								<option value="Nao informado">[--Selecione--]</option>
+								<option value="Baixo">Baixo</option>
+								<option value="Regular">Regular</option>
+								<option value="Alto">Alto</option>
+							</select>
+						</td>
+					</tr>
 										
 					<tr>
 						<td>Foto:</td>

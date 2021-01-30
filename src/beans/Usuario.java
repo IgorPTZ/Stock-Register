@@ -38,6 +38,8 @@ public class Usuario {
 	
 	private String sexo;
 	
+	private String perfilDeConsumo;
+	
 	private Boolean ativo;
 	
 	private Boolean atualizacaoDeImagem = false;
@@ -65,7 +67,8 @@ public class Usuario {
 			       String documentoBase64,
 			       String contentTypeDoDocumento,
 			       Boolean ativo,
-			       String sexo) {
+			       String sexo,
+			       String perfilDeConsumo) {
 		
 		this.id = id;
 		
@@ -102,6 +105,8 @@ public class Usuario {
 		this.ativo = ativo;
 		
 		this.sexo = sexo;
+		
+		this.perfilDeConsumo = perfilDeConsumo;
 	}
 	
 	public Long getId() {
@@ -238,6 +243,14 @@ public class Usuario {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public String getPerfilDeConsumo() {
+		return perfilDeConsumo;
+	}
+
+	public void setPerfilDeConsumo(String perfilDeConsumo) {
+		this.perfilDeConsumo = perfilDeConsumo;
 	}
 
 	public Boolean getAtivo() {
