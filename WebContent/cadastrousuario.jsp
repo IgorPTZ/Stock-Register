@@ -129,10 +129,78 @@
 						<td>Perfil de consumo:</td>
 						<td>
 							<select id="perfilConsumo" name="perfilConsumo" style="width: 170px;">
-								<option value="Nao informado">[--Selecione--]</option>
-								<option value="Baixo">Baixo</option>
-								<option value="Regular">Regular</option>
-								<option value="Alto">Alto</option>
+								<option value="Nao informado"
+									<%
+										if(request.getAttribute("usuario") != null) {
+											
+											Usuario usuario = (Usuario) request.getAttribute("usuario");
+											
+											if(usuario.getPerfilDeConsumo() != null && usuario.getPerfilDeConsumo().equalsIgnoreCase("Nao informado")){
+												
+												out.print(" ");
+												
+												out.print("selected=\"selected\"");
+												
+												out.print(" ");
+											}
+										}
+									%>
+								>[--Selecione--]</option>
+								
+								<option value="Baixo"
+									<%
+										if(request.getAttribute("usuario") != null) {
+											
+											Usuario usuario = (Usuario) request.getAttribute("usuario");
+											
+											if(usuario.getPerfilDeConsumo() != null && usuario.getPerfilDeConsumo().equalsIgnoreCase("Baixo")) {
+												
+												out.print(" ");
+												
+												out.print("selected=\"selected\"");
+												
+												out.print(" ");
+											}
+										}
+									%>
+								>Baixo</option>
+								
+								<option value="Regular"
+									<%
+										if(request.getAttribute("usuario") != null) {
+											
+											Usuario usuario = (Usuario) request.getAttribute("usuario");
+											
+											if(usuario.getPerfilDeConsumo() != null && usuario.getPerfilDeConsumo().equalsIgnoreCase("Regular")) {
+												
+												out.print(" ");
+												
+												out.print("selected=\"selected\"");
+												
+												out.print(" ");
+											}
+											
+										}
+									%>
+								>Regular</option>
+								
+								<option value="Alto"
+									<%
+										if(request.getAttribute("usuario") != null) {
+											
+											Usuario usuario = (Usuario) request.getAttribute("usuario");
+											
+											if(usuario.getPerfilDeConsumo() != null && usuario.getPerfilDeConsumo().equalsIgnoreCase("Alto")) {
+												
+												out.print(" ");
+												
+												out.print("selected=\"selected\"");
+												
+												out.print(" ");
+											}
+										}
+									%>
+								>Alto</option>
 							</select>
 						</td>
 					</tr>
@@ -156,7 +224,21 @@
 			</li>
 		</ul>
 	</form>
-
+	
+	<form action="pesquisaServlet" id="formPesquisa" method="post">
+		<ul class="form-style-1">
+			<li>
+				<table>
+					<tr>
+						<td>Descrição</td>
+						<td><input type="text" id="consultapordescricao" name="consultapordescricao"></td>
+						<td><input type="submit" value="Pesquisar"></td>
+					</tr>
+				</table>
+			</li>
+		</ul>
+	</form>
+	
 	<div class="container">
 		<table class="responsive-table">
 			<caption>Clientes cadastrados</caption>
