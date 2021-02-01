@@ -268,6 +268,53 @@ public class DaoUsuario {
 		return null;
 	}
 	
+	public List<Usuario> listarPorDescricao(String descricao) {
+		
+		try {
+			
+			List<Usuario> usuarios = new ArrayList<Usuario>();
+			
+			String sql = "select * from usuario where login <> 'admin' and nome like '%" + descricao + "%' order by nome";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				Usuario usuario = new Usuario(Long.parseLong(resultSet.getString("id")), 
+	                      resultSet.getString("login"), 
+	                      resultSet.getString("senha"),
+	                      resultSet.getString("nome"),
+	                      resultSet.getString("telefone"),
+	                      resultSet.getString("cep"),
+	                      resultSet.getString("rua"),
+	                      resultSet.getString("bairro"),
+	                      resultSet.getString("cidade"),
+	                      resultSet.getString("uf"),
+	                      resultSet.getString("ibge"),
+	                      null, // A imagem sera apenas carregada na apos o click para download, evitando uma lista de contatos com imagem muito pesadas
+	                      resultSet.getString("tipo_imagem"),
+	                      resultSet.getString("miniatura_imagem"),
+	                      resultSet.getString("documento"),
+	                      resultSet.getString("tipo_documento"),
+	                      resultSet.getBoolean("ativo"),
+	                      resultSet.getString("sexo"),
+	                      resultSet.getString("perfil_consumo"));
+
+				usuarios.add(usuario);
+			}
+			
+			return usuarios;
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	public void atualizar(Usuario usuario) {
 		
 		try {
