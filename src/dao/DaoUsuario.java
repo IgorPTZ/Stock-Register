@@ -120,7 +120,7 @@ public class DaoUsuario {
 		
 		try {
 			
-			String sql = "insert into usuario(login, senha, nome, telefone, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento, miniatura_imagem, ativo, sexo, perfil_consumo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario(login, senha, nome, cep, rua, bairro, cidade, uf, ibge, imagem, tipo_imagem, documento, tipo_documento, miniatura_imagem, ativo, sexo, perfil_consumo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -128,37 +128,35 @@ public class DaoUsuario {
 			
 			preparedStatement.setString(2, usuario.getSenha());
 			
-			preparedStatement.setString(3, usuario.getNome());
+			preparedStatement.setString(3, usuario.getNome());		
 			
-			preparedStatement.setString(4, usuario.getTelefone());
+			preparedStatement.setString(4, usuario.getCep());
 			
-			preparedStatement.setString(5, usuario.getCep());
+			preparedStatement.setString(5, usuario.getRua());
 			
-			preparedStatement.setString(6, usuario.getRua());
+			preparedStatement.setString(6, usuario.getBairro());
 			
-			preparedStatement.setString(7, usuario.getBairro());
+			preparedStatement.setString(7, usuario.getCidade());
 			
-			preparedStatement.setString(8, usuario.getCidade());
+			preparedStatement.setString(8, usuario.getUf());
 			
-			preparedStatement.setString(9, usuario.getUf());
+			preparedStatement.setString(9, usuario.getIbge());
 			
-			preparedStatement.setString(10, usuario.getIbge());
+			preparedStatement.setString(10, usuario.getFotoBase64());
 			
-			preparedStatement.setString(11, usuario.getFotoBase64());
+			preparedStatement.setString(11, usuario.getContentTypeDaImagem());
 			
-			preparedStatement.setString(12, usuario.getContentTypeDaImagem());
+			preparedStatement.setString(12, usuario.getDocumentoBase64());
 			
-			preparedStatement.setString(13, usuario.getDocumentoBase64());
+			preparedStatement.setString(13, usuario.getContentTypeDoDocumento());
 			
-			preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
+			preparedStatement.setString(14, usuario.getMiniaturaDaFotoBase64());
 			
-			preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
+			preparedStatement.setBoolean(15, usuario.getAtivo());
 			
-			preparedStatement.setBoolean(16, usuario.getAtivo());
+			preparedStatement.setString(16, usuario.getSexo());
 			
-			preparedStatement.setString(17, usuario.getSexo());
-			
-			preparedStatement.setString(18, usuario.getPerfilDeConsumo());
+			preparedStatement.setString(17, usuario.getPerfilDeConsumo());
 			
 			preparedStatement.execute();
 			
@@ -194,7 +192,6 @@ public class DaoUsuario {
 						                      resultSet.getString("login"), 
 						                      resultSet.getString("senha"),
 						                      resultSet.getString("nome"),
-						                      resultSet.getString("telefone"),
 						                      resultSet.getString("cep"),
 						                      resultSet.getString("rua"),
 						                      resultSet.getString("bairro"),
@@ -239,14 +236,13 @@ public class DaoUsuario {
 						                      resultSet.getString("login"), 
 						                      resultSet.getString("senha"),
 						                      resultSet.getString("nome"),
-						                      resultSet.getString("telefone"),
 						                      resultSet.getString("cep"),
 						                      resultSet.getString("rua"),
 						                      resultSet.getString("bairro"),
 						                      resultSet.getString("cidade"),
 						                      resultSet.getString("uf"),
 						                      resultSet.getString("ibge"),
-						                      null, // A imagem sera apenas carregada na apos o click para download, evitando uma lista de contatos com imagem muito pesadas
+						                      null, // A imagem sera apenas carregada apos o click para download, evitando uma lista de contatos com imagem muito pesadas
 						                      resultSet.getString("tipo_imagem"),
 						                      resultSet.getString("miniatura_imagem"),
 						                      resultSet.getString("documento"),
@@ -286,14 +282,13 @@ public class DaoUsuario {
 	                      resultSet.getString("login"), 
 	                      resultSet.getString("senha"),
 	                      resultSet.getString("nome"),
-	                      resultSet.getString("telefone"),
 	                      resultSet.getString("cep"),
 	                      resultSet.getString("rua"),
 	                      resultSet.getString("bairro"),
 	                      resultSet.getString("cidade"),
 	                      resultSet.getString("uf"),
 	                      resultSet.getString("ibge"),
-	                      null, // A imagem sera apenas carregada na apos o click para download, evitando uma lista de contatos com imagem muito pesadas
+	                      null, // A imagem sera apenas carregada apos o click para download, evitando uma lista de contatos com imagem muito pesadas
 	                      resultSet.getString("tipo_imagem"),
 	                      resultSet.getString("miniatura_imagem"),
 	                      resultSet.getString("documento"),
@@ -320,7 +315,7 @@ public class DaoUsuario {
 		try {
 			StringBuilder sql = new StringBuilder();
 			
-			sql.append(" update usuario set login = ?, senha = ?, nome = ?, telefone = ?,");
+			sql.append(" update usuario set login = ?, senha = ?, nome = ?,");
 			
 			sql.append(" cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, ibge = ?, ativo = ?, sexo = ?, perfil_consumo = ? ");
 			
@@ -344,52 +339,50 @@ public class DaoUsuario {
 			preparedStatement.setString(2, usuario.getSenha());
 			
 			preparedStatement.setString(3, usuario.getNome());
+						
+			preparedStatement.setString(4, usuario.getCep());
 			
-			preparedStatement.setString(4, usuario.getTelefone());
+			preparedStatement.setString(5, usuario.getRua());
 			
-			preparedStatement.setString(5, usuario.getCep());
+			preparedStatement.setString(6, usuario.getBairro());
 			
-			preparedStatement.setString(6, usuario.getRua());
+			preparedStatement.setString(7, usuario.getCidade());
 			
-			preparedStatement.setString(7, usuario.getBairro());
+			preparedStatement.setString(8, usuario.getUf());
 			
-			preparedStatement.setString(8, usuario.getCidade());
+			preparedStatement.setString(9, usuario.getIbge());
 			
-			preparedStatement.setString(9, usuario.getUf());
+			preparedStatement.setBoolean(10, usuario.getAtivo());
 			
-			preparedStatement.setString(10, usuario.getIbge());
+			preparedStatement.setString(11, usuario.getSexo());
 			
-			preparedStatement.setBoolean(11, usuario.getAtivo());
-			
-			preparedStatement.setString(12, usuario.getSexo());
-			
-			preparedStatement.setString(13, usuario.getPerfilDeConsumo());
+			preparedStatement.setString(12, usuario.getPerfilDeConsumo());
 			
 			if(usuario.getAtualizacaoDeImagem() && usuario.getAtualizacaoDeDocumento()) {
 				
-				preparedStatement.setString(14, usuario.getFotoBase64());
+				preparedStatement.setString(13, usuario.getFotoBase64());
 				
-				preparedStatement.setString(15, usuario.getContentTypeDaImagem());
+				preparedStatement.setString(14, usuario.getContentTypeDaImagem());
 				
-				preparedStatement.setString(16, usuario.getMiniaturaDaFotoBase64());
+				preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
 				
-				preparedStatement.setString(17, usuario.getDocumentoBase64());
+				preparedStatement.setString(16, usuario.getDocumentoBase64());
 				 
-				preparedStatement.setString(18, usuario.getContentTypeDoDocumento());
+				preparedStatement.setString(17, usuario.getContentTypeDoDocumento());
 			}
 			else if(usuario.getAtualizacaoDeImagem() && !usuario.getAtualizacaoDeDocumento()) {
 				
-				preparedStatement.setString(14, usuario.getFotoBase64());
+				preparedStatement.setString(13, usuario.getFotoBase64());
 				
-				preparedStatement.setString(15, usuario.getContentTypeDaImagem());
+				preparedStatement.setString(14, usuario.getContentTypeDaImagem());
 				
-				preparedStatement.setString(16, usuario.getMiniaturaDaFotoBase64());
+				preparedStatement.setString(15, usuario.getMiniaturaDaFotoBase64());
 			}
 			else if(usuario.getAtualizacaoDeDocumento() && !usuario.getAtualizacaoDeImagem()) {
 				
-				preparedStatement.setString(14, usuario.getDocumentoBase64());
+				preparedStatement.setString(13, usuario.getDocumentoBase64());
 				 
-				preparedStatement.setString(15, usuario.getContentTypeDoDocumento());
+				preparedStatement.setString(14, usuario.getContentTypeDoDocumento());
 			}
 
 			preparedStatement.executeUpdate();

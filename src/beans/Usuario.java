@@ -10,8 +10,6 @@ public class Usuario {
 	
 	private String senha;
 	
-	private String telefone;
-	
 	private String cep;
 	
 	private String rua;
@@ -54,7 +52,6 @@ public class Usuario {
 			       String login,
 			       String senha,
 			       String nome, 
-			       String telefone,
 			       String cep,
 			       String rua,
 			       String bairro,
@@ -77,8 +74,6 @@ public class Usuario {
 		this.senha = senha;
 		
 		this.nome = nome;
-		
-		this.telefone = telefone;
 		
 		this.cep = cep;
 		
@@ -139,14 +134,6 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 
 	public String getCep() {

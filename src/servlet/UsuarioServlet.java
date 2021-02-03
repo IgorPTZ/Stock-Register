@@ -159,8 +159,6 @@ public class UsuarioServlet extends HttpServlet {
 				
 				String senha = request.getParameter("senha");
 				
-				String telefone = request.getParameter("telefone");
-				
 				String cep = request.getParameter("cep");
 				
 				String rua = request.getParameter("rua");
@@ -206,7 +204,6 @@ public class UsuarioServlet extends HttpServlet {
 		                      login, 
 		                      senha, 
 		                      nome, 
-		                      telefone,
 		                      cep,
 		                      rua,
 		                      bairro,
@@ -228,7 +225,6 @@ public class UsuarioServlet extends HttpServlet {
 		                      login, 
 		                      senha, 
 		                      nome, 
-		                      telefone,
 		                      cep,
 		                      rua,
 		                      bairro,
