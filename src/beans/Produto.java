@@ -10,23 +10,23 @@ public class Produto {
 	
 	private Double valor;
 	
+	private Long categoriaId;
+	
 	public Produto() {
 		
 	}
 	
-	public Produto(String nome, Double quantidade, Double valor) {
+	public Produto(Long id, String nome, Double quantidade, Double valor, Long categoriaId) {
 		
-		this.nome       = nome;
-		this.quantidade = quantidade;
-		this.valor      = valor;
-	}
-	
-	public Produto(Long id, String nome, Double quantidade, Double valor) {
+		this.id          = id;
 		
-		this.id         = id;
-		this.nome       = nome;
-		this.quantidade = quantidade;
-		this.valor      = valor;
+		this.nome        = nome;
+		
+		this.quantidade  = quantidade;
+		
+		this.valor       = valor;
+		
+		this.categoriaId = categoriaId;
 	}
 
 	public Long getId() {
@@ -61,6 +61,14 @@ public class Produto {
 		this.valor = valor;
 	}
 	
+	public Long getCategoriaId() {
+		return categoriaId;
+	}
+
+	public void setCategoriaId(Long categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+
 	public String getValorEmTexto() {
 		
 		return Double.toString(valor).replace('.', ',');

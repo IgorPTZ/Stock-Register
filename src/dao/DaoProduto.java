@@ -68,7 +68,7 @@ public class DaoProduto {
 		
 		try {
 			
-			String sql = "insert into produto (nome, quantidade, valor) values (?, ?, ?)";
+			String sql = "insert into produto (nome, quantidade, valor, categoria_id) values (?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -77,6 +77,8 @@ public class DaoProduto {
 			preparedStatement.setDouble(2, produto.getQuantidade());
 			
 			preparedStatement.setDouble(3, produto.getValor());
+			
+			preparedStatement.setLong(4, produto.getCategoriaId());
 			
 			preparedStatement.execute();
 			
@@ -112,7 +114,8 @@ public class DaoProduto {
 				Produto produto = new Produto (Long.parseLong(resultSet.getString("id")),
 											   resultSet.getString("nome"),
 											   Double.parseDouble(resultSet.getString("quantidade")),
-											   Double.parseDouble(resultSet.getString("valor")));
+											   Double.parseDouble(resultSet.getString("valor")),
+											   resultSet.getLong("categoria_id"));
 				
 				return produto;
 			}
@@ -142,7 +145,8 @@ public class DaoProduto {
 				Produto produto = new Produto(Long.parseLong(resultSet.getString("id")),
 											  resultSet.getString("nome"),
 											  Double.parseDouble(resultSet.getString("quantidade")),
-											  Double.parseDouble(resultSet.getString("valor")));
+											  Double.parseDouble(resultSet.getString("valor")),
+											  resultSet.getLong("categoria_id"));
 				
 				produtos.add(produto);
 			}
@@ -157,7 +161,7 @@ public class DaoProduto {
 		return null;
 	}
 	
-	public List<Categoria> listarCategoria() {
+	public List<Categoria> listarCategorias() {
 		
 		try {
 			
@@ -191,7 +195,7 @@ public class DaoProduto {
 		
 		try {
 			
-			String sql = "update produto set nome = ?, quantidade = ?, valor = ? where id = " + produto.getId();
+			String sql = "update produto set nome = ?, quantidade = ?, valor = ?, categoria_id = ? where id = " + produto.getId();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
@@ -200,6 +204,8 @@ public class DaoProduto {
 			preparedStatement.setDouble(2, produto.getQuantidade());
 			
 			preparedStatement.setDouble(3, produto.getValor());
+			
+			preparedStatement.setLong(4, produto.getCategoriaId());
 			
 			preparedStatement.executeUpdate();
 			

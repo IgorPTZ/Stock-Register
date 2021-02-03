@@ -45,6 +45,19 @@
 						</tr>
 						
 						<tr>
+							<td>Categoria:</td>
+							<td>
+								<select id="categorias" name="categoriaId">
+									<c:forEach items="${categorias}" var="categoria">
+										<option value="${categoria.id}" id="${categoria.id}">
+											${categoria.nome}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
 							<td></td>
 							<td><input type="submit" value="Salvar">
 							    <input type="submit" value="Cancelar" onclick="document.getElementById('formProduto').action = 'produtoServlet?acao=reset'"></td>
