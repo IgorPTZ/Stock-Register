@@ -10,11 +10,11 @@ public class SingleConnection {
 	
 	private static String banco = "jdbc:postgresql://localhost:5432/jsp-app?autoReconnect=true";
 	
-	private static String password = "postgres";
+	private static String senha = "postgres";
 	
-	private static String user = "postgres";
+	private static String usuario = "postgres";
 	
-	private static Connection connection = null;
+	private static Connection conexao = null;
 	
 	static {
 		conectar();
@@ -29,13 +29,13 @@ public class SingleConnection {
 		
 		try {
 			
-			if(connection == null) {
+			if(conexao == null) {
 				
 				Class.forName("org.postgresql.Driver");
 				
-				connection = DriverManager.getConnection(banco, user, password);
+				conexao = DriverManager.getConnection(banco, usuario, senha);
 				
-				connection.setAutoCommit(false);
+				conexao.setAutoCommit(false);
 			}
 		}
 		catch(Exception e) {
@@ -48,6 +48,6 @@ public class SingleConnection {
 	
 	public static Connection getConnection() {
 		
-		return connection;
+		return conexao;
 	}
 }
